@@ -12,7 +12,7 @@
                         <i class="fas fa-file-alt mr-2"></i>Services
                     </a>
                     <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white"
-                        href="#">
+                        href={{ Route('pages.viewemploye') }}>
                         <i class="fas fa-users mr-2"></i>Employees
                     </a>
                     <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white"

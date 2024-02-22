@@ -22,6 +22,9 @@
                 width: 50%;
             }
         }
+      #menu-toggle:checked + #menu {
+        display: block;
+      }
     </style>
 
 
@@ -35,13 +38,11 @@
 
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-        @include('layouts.navigation')
+        @include('pages.website.layouts.navbar')
         <div class="flex flex-col h-screen">
-            <div class="flex-1 flex">
-                @include('layouts.sidebar')
 
-                <!-- Page Heading -->
-                {{-- @if (isset($header))
+            <!-- Page Heading -->
+            {{-- @if (isset($header))
                     <header class="bg-white dark:bg-gray-800 shadow">
                         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                             {{ $header }}
@@ -49,22 +50,25 @@
                     </header>
                 @endif --}}
 
-                <!-- Page Content -->
-                <div class="flex-1 p-4 bg-white dark:bg-gray-700">
-                    @if ($message = Session::get('success'))
-                        <div class="w-full px-4 py-3 text-sm border rounded border-emerald-100 bg-emerald-50 text-emerald-500"
-                            role="alert">
-                            <p> {{ $message }}</p>
-                        </div>
-                    @endif
+            <!-- Page Content -->
+            <div class="flex-1 bg-white dark:bg-gray-700">
+                @if ($message = Session::get('success'))
+                    <div class="w-full px-4 py-3 text-sm border rounded border-emerald-100 bg-emerald-50 text-emerald-500"
+                        role="alert">
+                        <p> {{ $message }}</p>
+                    </div>
+                @endif
 
-                    <main>
-                        {{ $slot }}
-                    </main>
-                </div>
+                <main>
+                    {{-- {{ $slot }} --}}
+                    @yield('webcontent')
+                    @include('pages.website.layouts.footer')
+                </main>
             </div>
         </div>
+
     </div>
+
 </body>
 
 </html>
