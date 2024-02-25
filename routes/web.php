@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,9 +17,13 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/about', [HomeController::class, 'about'])->name('aboutus');
+Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+Route::get('/services', [HomeController::class, 'services'])->name('ourservices');
+Route::get('/appointment/{id}', [HomeController::class, 'appointment'])->name('service.appoinment');
+Route::post('/makeappointment/{id}', [HomeController::class, 'makeAppointment'])->name('makeappointment');
+
 
 Route::get('/dashboard', function () {
     return view('pages.dashboard.dashboard');
@@ -27,6 +33,15 @@ Route::get('/viewproducts', [ProductController::class, 'viewProduct'])->name('pa
 Route::get('/addproduct', [ProductController::class, 'addProduct'])->name('pages.addproduct');
 Route::post('/addnewproduct', [ProductController::class, 'addNewProduct'])->name('addnewproduct');
 Route::delete('/services/{item}/destroy', [ProductController::class, 'destroyService'])->name('services.destroy');
+Route::get('/editservice/{id}', [ProductController::class, 'editService'])->name('page.editservice');
+Route::put('/updateservice/{id}', [ProductController::class, 'updateService'])->name('updateservice');
+
+Route::get('/viewemploye', [EmployeeController::class, 'viewEmploye'])->name('pages.viewemploye');
+Route::get('/addemployee', [EmployeeController::class, 'addEmployee'])->name('pages.addemployee');
+Route::get('/editemployee/{id}', [EmployeeController::class, 'editEmploy'])->name('page.editemployee');
+Route::delete('/employee/{item}/destroy', [EmployeeController::class, 'deleteEmployee'])->name('employee.destroy');
+Route::post('addnewemployee', [EmployeeController::class, 'addNewEmployee'])->name('addnewemployee');
+Route::put('/updateemployee/{id}', [EmployeeController::class, 'updateEmployee'])->name('updateemployee');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

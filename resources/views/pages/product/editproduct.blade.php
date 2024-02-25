@@ -10,31 +10,33 @@
 
             <div class="flex justify-center">
                 <div class="flex">
-                    <h1 class="text-white font-bold md:text-2xl text-xl">Add Service</h1>
+                    <h1 class="text-white font-bold md:text-2xl text-xl">Edit Service</h1>
                 </div>
             </div>
-            <form action={{ Route('addnewproduct') }} method="POST" enctype="multipart/form-data">
+            <form action={{ Route('updateservice', ['id' => $result->id ]) }} method="POST" enctype="multipart/form-data">
 
                 {{ csrf_field() }}
+
+                @method('put')
 
                 <div class="grid grid-cols-1 mt-5 mx-7">
                     <label class="uppercase md:text-sm text-xs text-white text-light font-semibold">name</label>
                     <input
                         class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                        type="text" name="name" placeholder="Name" />
+                        type="text" name="name" value={{ $result->name }} />
                 </div>
                 <div class="grid grid-cols-1 mt-5 mx-7">
                     <label class="uppercase md:text-sm text-xs text-white text-light font-semibold">description</label>
-                    <textarea
+                    <input
                         class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                        name="description" placeholder="description"></textarea>
+                        type="text" name="description" value={{ $result->description }} />
                 </div>
 
                 <div class="grid grid-cols-1 mt-5 mx-7">
                     <label class="uppercase md:text-sm text-xs text-white text-light font-semibold">price</label>
                     <input
                         class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                        type="text" name="price" placeholder="price" />
+                        type="text" name="price" value={{ $result->price }} />
                 </div>
 
 
@@ -69,7 +71,7 @@
                 <div class="grid grid-cols-1 mt-5 mx-7">
                     <label class="uppercase md:text-sm text-xs text-white text-light font-semibold mb-1">Upload
                         Photo</label>
-                    <div class='flex justify-start w-full'>
+                    <div class='flex justify-start w-full flex-col'>
                         {{-- <label
                             class='flex flex-col border-4 border-dashed w-full h-32 hover:bg-gray-100 hover:border-purple-300 group'>
                             <div class='flex flex-col items-center justify-center pt-7'>
@@ -85,7 +87,8 @@
                             </div>
 
                         </label> --}}
-                        <input type='file' class="" name="image" />
+                        <img src="{{ asset('images/' . $result->image) }}" alt="image" class="w-16 mb-2" />
+                        <input type='file' class="" name="image" value={{ $result->image }} />
                     </div>
                 </div>
 
@@ -93,7 +96,7 @@
                     {{-- <button
                         class='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>Cancel</button> --}}
                     <button type="submit"
-                        class='w-auto bg-purple-500 hover:bg-purple-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>Create</button>
+                        class='w-auto bg-purple-500 hover:bg-purple-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>Update</button>
                 </div>
             </form>
         </div>
