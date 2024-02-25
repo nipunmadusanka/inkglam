@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product as ServiceModel;
 use App\Models\Employe as EmployeeModel;
+use App\Models\Ratings as RatingsModel;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -31,10 +33,30 @@ class HomeController extends Controller
 
     public function appointment($id) {
         $get_service = ServiceModel::find($id);
-        return view('pages.website.pages.appoinments.appoinment', ['id' => $id, 'serviceData' => $get_service]);
+        $ratings = RatingsModel::where('sId', $id)->with('user')->get();
+        return view('pages.website.pages.appoinments.appoinment', ['id' => $id, 'serviceData' => $get_service, 'ratings' => $ratings]);
     }
 
     public function makeAppointment(Request $request, $id) {
+        return $request;
+    }
+
+    public function postRatings(Request $request, $id) {
+        $request->validate([
+            'rating' => 'required',
+            'svgId' => 'required',
+        ]);
+        $my_id = Auth::id();
+        $adminreply = 'no';
+        $status = 1;
+        RatingsModel::create([
+            'uId' => $my_id,
+            'sId' => $id,
+            'comment' => $request->rating,
+            'admin_reply' => $adminreply,
+            'star' => $request->svgId,
+            'status' => $status,
+        ]);
         return $request;
     }
 }

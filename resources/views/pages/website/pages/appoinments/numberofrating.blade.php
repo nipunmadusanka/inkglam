@@ -1,3 +1,4 @@
+
 <div class='flex flex-row gap-3'>
     <svg class="h h-5 transition-all duration-100  fill-yellow-500 cursor-pointer"
         viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -35,6 +36,6 @@
         </path>
     </svg>
     <div>
-        <p> 23 </p>
+        <p>0</p>
     </div>
 </div>

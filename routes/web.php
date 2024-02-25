@@ -23,6 +23,7 @@ Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::get('/services', [HomeController::class, 'services'])->name('ourservices');
 Route::get('/appointment/{id}', [HomeController::class, 'appointment'])->name('service.appoinment');
 Route::post('/makeappointment/{id}', [HomeController::class, 'makeAppointment'])->name('makeappointment');
+Route::post('/postratings/{id}', [HomeController::class, 'postRatings'])->name('postratings');
 
 
 Route::get('/dashboard', function () {

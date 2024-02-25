@@ -30,6 +30,13 @@
             @auth
 
                 <div class="mx-auto items-center justify-center shadow-lg max-w-lg bg-white">
+
+                    <div id="alertDiv"
+                        class="w-auto px-4 py-3 m-5 text-sm border rounded border-emerald-500 bg-emerald-50 text-emerald-500"
+                        role="alert" style="display: none;">
+                        <p id="alertP">Comment is empty. Please provide a comment.</p>
+                    </div>
+
                     <!-- component -->
                     <div class='rating flex flex-row gap-3 my-6 px-4'>
                         <svg id="1"
@@ -71,14 +78,16 @@
                     </div>
 
 
-                    <form class="w-full max-w-xl rounded-lg px-4 pt-2" id="ratingform" method="POST"
+                    <form class="w-full max-w-xl rounded-lg px-4 pt-2" id="ratingform"
+                        action="{{ route('postratings', ['id' => $serviceData->id]) }}" method="POST"
                         enctype="multipart/form-data">
+                        <input type="text" hidden id="serviceId" value={{ $serviceData->id }}>
                         <div class="flex flex-wrap -mx-3 mb-6">
                             <h2 class="px-4 pt-3 pb-2 text-gray-800 text-lg">Add a new Reviews</h2>
                             <div class="w-full md:w-full px-3 mb-2 mt-2">
                                 <textarea
                                     class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
-                                    name="rating" placeholder='Type Your Comment' required></textarea>
+                                    name="rating" id="rating" placeholder='Type Your Comment' required></textarea>
                             </div>
                             <div class="w-full md:w-full flex items-start md:w-full px-3">
                                 <div class="flex items-start w-1/2 text-gray-700 px-2 mr-auto">
@@ -121,40 +130,72 @@
             }
         }
     }
-    var svgId;
+    var svgId = 1;
     $(document).ready(function() {
 
         $('svg.cursor-pointer').click(function(e) {
-                e.preventDefault();
-                svgId = $(this).attr('id');
-                console.log(svgId);
-            });
+            e.preventDefault();
+            svgId = $(this).attr('id');
+            console.log(svgId);
+        });
 
+        var canSubmit = true;
         $('.rating-submit-btn').click(function(e) {
             e.preventDefault();
-            var formData = new FormData($('#ratingform')[0]);
-            console.log('hh', svgId);
-            formData.append('svgId', svgId);
-            for (var pair of formData.entries()) {
-                console.log(pair[0] + ', ' + pair[1]);
-            }
-            // $.ajax({
+            if (canSubmit) {
+                var formData = new FormData($('#ratingform')[0]);
+                var comment = $('#rating').val();
+                formData.append('svgId', svgId);
+                canSubmit = false;
 
-            //     type: 'POST',
-            //     data: formData,
-            //     processData: false,
-            //     contentType: false,
-            //     headers: {
-            //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            //     },
-            //     success: function(response) {
-            //         console.log(response);
-            //         window.location.href = "{{ route('ourservices') }}";
-            //     },
-            //     error: function(error) {
-            //         console.log(error.responseText);
-            //     }
-            // });
+                if (comment) {
+                    $('#alertDiv').hide();
+                    $.ajax({
+                        url: $('#ratingform').attr('action'),
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(response) {
+                            console.log(response);
+                        },
+                        error: function(error) {
+                            console.log(error.responseText);
+                        },
+                        complete: function() {
+                            console.log('Your Rating was successfully submitted')
+                            $('#alertDiv').show();
+                            $('#alertP').text('Your Rating was successfully submitted');
+                            setTimeout(function() {
+                                $('#alertDiv').hide();
+                            }, 10000);
+                            // Enable submissions after 2 minutes
+                            setTimeout(function() {
+                                canSubmit = true;
+                            }, 60000); // 1 minutes in milliseconds
+                        }
+                    });
+                } else {
+                    setTimeout(function() {
+                        $('#alertDiv').hide();
+                    }, 15000);
+                    // Show the hidden div
+                    $('#alertDiv').show();
+                    // Change the text inside the <p> element
+                    $('#alertP').text('Comment is empty. Please provide a comment.');
+                    console.log('Comment is empty. Please provide a comment.');
+                }
+            } else {
+                setTimeout(function() {
+                    $('#alertDiv').hide();
+                }, 15000);
+                $('#alertDiv').show();
+                $('#alertP').text('Cannot submit within 1 minutes. Please wait.');
+                console.log('Cannot submit within 1 minutes. Please wait.');
+            }
         });
     });
 </script>
