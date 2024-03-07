@@ -1,4 +1,4 @@
-<div class="flex justify-center w-full h-auto p-4 bg-slate-100 ">
+<div class="flex justify-center w-full h-auto p-4 bg-[#181818] ">
     <div class="container items-center bg-white shadow-md">
         <div class="flex flex-col">
             <div class="items-start p-2 py-4">Ratings & Reviews</div>

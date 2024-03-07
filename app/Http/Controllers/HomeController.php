@@ -6,42 +6,95 @@ use Illuminate\Http\Request;
 use App\Models\Product as ServiceModel;
 use App\Models\Employe as EmployeeModel;
 use App\Models\Ratings as RatingsModel;
+use App\Models\Employee_has_services as EmployeeHasServices;
+use App\Models\Timeslot as TimeslotModel;
+use App\Models\NewAppoinments as NewAppoinmentsModel;
+use App\Models\User as UserModel;
+use App\Models\Letstalk as LetstalkModel;
 use Illuminate\Support\Facades\Auth;
+use PHPUnit\Metadata\Uses;
 
 class HomeController extends Controller
 {
     //
 
-    public function index(){
-        $data = ServiceModel::all();
-        $employeedata = EmployeeModel::all();
+    public function index()
+    {
+        $data = ServiceModel::where('status', 1)->get();
+        $employeedata = EmployeeModel::where('status', 1)->get();
         return view('pages.website.pages.home.home', ['serviceData' => $data, 'employeedata' => $employeedata]);
     }
 
-    public function about() {
+    public function about()
+    {
         return view('pages.website.pages.about.about');
     }
 
-    public function contact() {
+    public function contact()
+    {
         return view('pages.website.pages.contact.contact');
     }
 
-    public function services() {
-        $service_data = ServiceModel::all();
+    public function services()
+    {
+        $service_data = ServiceModel::where('status', 1)->get();
         return view('pages.website.pages.services.services', ['serviceData' => $service_data]);
     }
 
-    public function appointment($id) {
+    public function appointment($id)
+    {
         $get_service = ServiceModel::find($id);
         $ratings = RatingsModel::where('sId', $id)->with('user')->get();
-        return view('pages.website.pages.appoinments.appoinment', ['id' => $id, 'serviceData' => $get_service, 'ratings' => $ratings]);
+        $starCounts = RatingsModel::where('sId', $id)
+            ->groupBy('star')
+            ->selectRaw('star, COUNT(*) as count')
+            ->pluck('count', 'star')
+            ->toArray();
+        $countRatings = RatingsModel::where('status', 1)
+            ->where('sId', $id)
+            ->count();
+        // $employees = EmployeeHasServices::where('sId', $id)
+        //     ->where('status', 1)
+        //     ->with('products') // Assuming 'product' is the correct relationship name
+        //     ->get();
+        $employeesWithServices = EmployeeHasServices::where('sId', $id)
+            ->where('employee_has_services.status', 1) // Add this condition for status
+            ->join('products', 'employee_has_services.sId', '=', 'products.id')
+            ->join('employes', 'employee_has_services.eId', '=', 'employes.id')
+            ->select('employes.*')
+            ->get();
+        return view('pages.website.pages.appoinments.appoinment', [
+            'id' => $id,
+            'serviceData' => $get_service,
+            'ratings' => $ratings,
+            'countRatings' => $countRatings,
+            'starCounts' => $starCounts,
+            'employeesWithServices' => $employeesWithServices,
+        ]);
     }
 
-    public function makeAppointment(Request $request, $id) {
-        return $request;
+    public function makeAppointment(Request $request, $id)
+    {
+        $sId = $id;
+        $emId = $request->employeId;
+
+        $result = [
+            'sId' => $sId,
+            'emId' => $emId,
+        ];
+
+        $my_id = Auth::id();
+
+        if ($my_id) {
+            return $result;
+        } else {
+            $notlogin = 0;
+            return $notlogin;
+        }
     }
 
-    public function postRatings(Request $request, $id) {
+    public function postRatings(Request $request, $id)
+    {
         $request->validate([
             'rating' => 'required',
             'svgId' => 'required',
@@ -58,5 +111,69 @@ class HomeController extends Controller
             'status' => $status,
         ]);
         return $request;
+    }
+
+    public function placeAppoinmentView()
+    {
+        $time_data = TimeslotModel::all();
+        return view('pages.website.pages.placeappoinment.placeappoinment', ['timeSlots' => $time_data]);
+    }
+    public function placeAppoinment(Request $request)
+    {
+        // dd($request);
+        $request->validate([
+            'sId' => 'required',
+            'emId' => 'required',
+            'name' => 'required',
+            'phone' => 'required',
+            'email' => 'required',
+            'time' => 'required',
+            'date' => 'required',
+            'message' => 'required',
+        ]);
+        $uId = Auth::id();
+        $status = 0;
+        NewAppoinmentsModel::create([
+            'uId' => $uId,
+            'eId' => $request->emId,
+            'sId' => $request->sId,
+            'tId' => $request->time,
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'date' => $request->date,
+            'message' => $request->message,
+            'status' => $status,
+        ]);
+        return redirect('/services')->with('success', 'Successfully');
+    }
+
+    public function letStalk(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'subject' => 'required',
+            'message' => 'required',
+        ]);
+        LetstalkModel::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'subject' => $request->subject,
+            'message' => $request->message,
+        ]);
+        return $request;
+    }
+
+    public function letsTalksContacts()
+    {
+        $result = LetstalkModel::get();
+        return view('pages.letstalks.letstalks', ['result' => $result]);
+    }
+
+    public function alluseradmin()
+    {
+        $usersWithType2 = UserModel::where('user_type', 2)->get();
+        return view('pages.users.users', ['result' => $usersWithType2]);
     }
 }

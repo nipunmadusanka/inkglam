@@ -10,24 +10,27 @@ use Illuminate\Support\Facades\DB;
 class ProductController extends Controller
 {
     //
-    public function viewProduct(){
+    public function viewProduct()
+    {
         $result = ProductModel::all();
         return view('pages.product.product', ['result' => $result]);
     }
 
-    public function addProduct(){
+    public function addProduct()
+    {
         return view('pages.product.addproduct');
     }
 
-    public function addNewProduct(Request $request) {
+    public function addNewProduct(Request $request)
+    {
         $my_id = Auth::id();
         $request->validate([
-        'name' => 'required',
-        'description' => 'required',
-        'price' => 'required',
-        'image' => 'required|image|mimes:png,jpg,jpeg|max:2048',
+            'name' => 'required',
+            'description' => 'required',
+            'price' => 'required',
+            'image' => 'required|image|mimes:png,jpg,jpeg|max:2048',
         ]);
-        $imageName = time().'.'.$request->image->extension();
+        $imageName = time() . '.' . $request->image->extension();
         $request->image->move(public_path('images'), $imageName);
 
         $pro = new ProductModel();
@@ -39,39 +42,64 @@ class ProductController extends Controller
         $pro->image = $imageName;
 
         $pro->save();
-        return redirect('/viewproducts')->with('success','Successfully add service');
+        return redirect('/viewproducts')->with('success', 'Successfully add service');
     }
 
-    public function destroyService(ProductModel $item){
-        $item->delete();
-        return redirect('/viewproducts')->with('success','Successfully Delete Service');
+    public function destroyService(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        $item = $data['deActiveId'];
+        $product = ProductModel::find($item);
+        if ($product) {
+            $product->update(['status' => '0']);
+            return redirect('/viewproducts')->with('success', 'Successfully updated status');
+        } else {
+            return redirect('/viewproducts')->with('error', 'Product not found');
+        }
     }
-    public function editService($id){
+
+    public function activeService(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        $item = $data['activeId'];
+
+        $product = ProductModel::find($item);
+        if ($product) {
+            $product->update([
+                'status' => '1',
+            ]);
+            return redirect('/viewproducts')->with('success', 'Successfully updated status');
+        } else {
+            return redirect('/viewproducts')->with('error', 'Product not found');
+        }
+    }
+    public function editService($id)
+    {
         $data = ProductModel::find($id);
         return view('pages.product.editproduct', ['result' => $data]);
     }
 
-    public function updateService($id, Request $request){
+    public function updateService($id, Request $request)
+    {
         $request->validate([
-        'name' => 'required',
-        'description' => 'required',
-        'price' => 'required',
+            'name' => 'required',
+            'description' => 'required',
+            'price' => 'required',
         ]);
         $row = ProductModel::find($id);
 
         $getimage = DB::select('select image from products where id = ?', [$id]);
-        foreach($getimage as $img){
+        foreach ($getimage as $img) {
             $imageName = $img->image;
         };
         $chechimage = $request->image;
 
-        if($chechimage == null ){
-
+        if ($chechimage == null) {
         } else {
             $request->validate([
                 'image' => 'required|image|mimes:png,jpg,jpeg|max:2048',
             ]);
-            $imageName = time().'.'.$request->image->extension();
+            $imageName = time() . '.' . $request->image->extension();
             $request->image->move(public_path('images'), $imageName);
         }
 
@@ -82,6 +110,6 @@ class ProductController extends Controller
             'image' => $imageName,
         ]);
 
-        return redirect('/viewproducts')->with('success','Successfully update service');
+        return redirect('/viewproducts')->with('success', 'Successfully update service');
     }
 }

@@ -1,6 +1,6 @@
 <x-app-layout>
-
-    <div class="flex h-screen  items-center justify-center  mt-15 mb-15">
+    @if (Auth::user()->user_type == 0)
+    <div class="flex h-auto  items-center justify-center  mt-15 mb-15">
         <div class="grid rounded-lg shadow-xl w-11/12 md:w-9/12 lg:w-1/2">
             {{-- <div class="flex justify-center py-4">
             <div class="flex bg-purple-200 rounded-full md:p-4 p-2 border-2 border-purple-300">
@@ -98,4 +98,5 @@
             </form>
         </div>
     </div>
+    @endif
 </x-app-layout>

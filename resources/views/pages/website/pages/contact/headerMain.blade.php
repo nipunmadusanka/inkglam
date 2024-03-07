@@ -5,7 +5,7 @@
             <div class="flex flex-col justify-center space-y-2 text-white font-serif">
                 <div class="space-y-2 items-center text-center">
                     <p class="text-center font-light text-base">Contact Us</p>
-                    <h1 class=" text-center text-4xl font-serif font-extrabold">Our Barbershop.</h1>
+                    <h1 class=" text-center text-4xl font-serif font-extrabold">Our Tattooshop</h1>
                 </div>
                 <div class="flex justify-center items-center">
                     ...

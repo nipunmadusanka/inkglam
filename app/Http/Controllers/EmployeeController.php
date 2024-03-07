@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employe as EmployeeModel;
+use App\Models\Product as ProductModel;
+use App\Models\Employee_has_services as EmployeeHasServices;
+use App\Models\NewAppoinments as NewAppoinments;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -12,23 +15,57 @@ class EmployeeController extends Controller
     //
     public function viewEmploye()
     {
-        $result = EmployeeModel::all();
-        return view('pages.employee.employee', ['result' => $result]);
+        $id = Auth::user()->user_type;
+        if ($id == 0) {
+            $result = EmployeeModel::all();
+            return view('pages.employee.employee', ['result' => $result]);
+        } else {
+            return view('pages.dashboard.dashboard');
+        }
     }
     public function addEmployee()
     {
-        return view('pages.employee.addemployee');
+        $id = Auth::user()->user_type;
+        if ($id == 0) {
+            return view('pages.employee.addemployee');
+        } else {
+            return view('pages.dashboard.dashboard');
+        }
     }
     public function editEmploy($id)
     {
         $row = EmployeeModel::find($id);
-        return view('pages.employee.editemployee', ['result' => $row]);
+        $service = ProductModel::where('status', 1)->get();
+        $employe_has_service = EmployeeHasServices::where('status', 1)->where('eId', $id)->with('Product')->get();
+        return view('pages.employee.editemployee', ['result' => $row, 'service' => $service, 'employee_has_service' => $employe_has_service]);
     }
-    public function deleteEmployee(EmployeeModel $item)
+    public function deleteEmployee(Request $request)
     {
-        $item->delete();
-        return redirect('/viewemploye')->with('success', 'Employee deleted successfully');
+        $data = json_decode($request->getContent(), true);
+        $item = $data['deActiveId'];
+        $deletItem = EmployeeModel::find($item);
+        if ($deletItem) {
+            $deletItem->update(['status' => 0]);
+            return redirect('/viewemploye')->with('success', 'Employee deleted successfully');
+        } else {
+            return redirect('/viewemploye')->with('error', 'Employee not found');
+        }
     }
+
+    public function activateEmployee(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        $item = $data['activeId'];
+
+        $activateItem = EmployeeModel::find($item);
+        if ($activateItem) {
+            $activateItem->update(['status' => 1]);
+            return redirect('/viewemploye')->with('success', 'Employee activated successfully');
+        } else {
+            return redirect('/viewemploye')->with('error', 'Employee not found');
+        }
+    }
+
     public function addNewEmployee(Request $request)
     {
         $my_id = Auth::id();
@@ -95,5 +132,80 @@ class EmployeeController extends Controller
             'image' => $imageName,
         ]);
         return redirect('/viewemploye')->with('success', 'Employ Update Success');
+    }
+
+    public function addServiceToEmployee(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        $sId = $data['adddMyId'];
+        $emId = $data['emId'];
+        $my_id = Auth::id();
+
+        // Check if a record with the given eId and sId already exists in the same row
+        $existingRecord = EmployeeHasServices::where('eId', $emId)
+            ->where('sId', $sId)
+            ->where('status', 1)
+            ->exists();
+
+        if ($existingRecord) {
+            // Record already exists, return a response message for AJAX
+            return response()->json(['message' => 'Record already exists'], 400);
+        }
+
+        $existingRecord_notActvive = EmployeeHasServices::where('eId', $emId)
+            ->where('sId', $sId)
+            ->where('status', 0)
+            ->exists();
+
+        if ($existingRecord_notActvive) {
+            $existingRecord_notActvive_Row = EmployeeHasServices::where('eId', $emId)
+                ->where('sId', $sId)
+                ->where('status', 0)
+                ->first();
+            $existingRecord_notActvive_Row->update(['status' => 1]);
+            return response()->json(['message' => 'Record Changed successfully']);
+        } else {
+
+            // Record does not exist, create a new one
+            EmployeeHasServices::create([
+                'admin_Id' => $my_id,
+                'eId' => $emId,
+                'sId' => $sId
+            ]);
+
+            // Return a success response for AJAX
+            return response()->json(['message' => 'Record added successfully']);
+        }
+    }
+
+    public function removeEmployeeInService(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        $removeServiceId = $data['removeServiceId'];
+
+        // Attempt to find a single EmployeeHasServices model by its id
+        $get_row = EmployeeHasServices::find($removeServiceId);
+
+        // Check if the model was found
+        if ($get_row) {
+            // If found, update the status
+            $get_row->update(['status' => 0]);
+            return response()->json(['message' => 'Record Removed successfully']);
+        } else {
+            // If not found, return an error response
+            return response()->json(['message' => 'Employee not found'], 404); // Use 404 for "Not Found"
+        }
+    }
+
+    public function viewemployeinfo($id)
+    {
+        $row = EmployeeModel::find($id);
+        $employe_has_service = EmployeeHasServices::where('status', 1)->where('eId', $id)->with('Product')->get();
+        $myappoinments = NewAppoinments::where('eid', $id)->with('employe')->get();
+        return view('pages.employee.viewemploye', [
+            'result' => $row,
+            'employe_has_service' => $employe_has_service,
+            'myappoinments' => $myappoinments
+        ]);
     }
 }

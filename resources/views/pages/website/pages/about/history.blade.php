@@ -1,4 +1,4 @@
-<div class="flex justify-center w-full h-full p-5 bg-slate-100">
+<div class="flex justify-center w-full h-full p-5 bg-black">
     <div class="container flex items-center justify-center">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
             <div class="flex justify-center">
@@ -7,8 +7,8 @@
                         class="block h-3/4 w-auto fill-current text-gray-800 dark:text-gray-200 ocus:shadow-outline" />
                 </div>
             </div>
-            <div class="flex flex-col space-y-6 justify-center">
-                <p class="font-serif text-center font-bold text-2xl">OUR HISTORY
+            <div class="flex flex-col space-y-6 justify-center text-white">
+                <p class="font-serif text-center text-3xl font-bold text-amber-500">OUR HISTORY
                 </p>
                 <p class=" text-center">
                     Established in 1997, Ink & Glam Salon emerged as a beacon of style, sophistication, and artistic

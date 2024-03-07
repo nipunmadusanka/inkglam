@@ -1,14 +1,11 @@
-<div class="flex justify-center items-center p-5 w-full h-auto bg-slate-100 font-serif">
+<div class="flex justify-center items-center p-5 w-full h-auto bg-[#181818] font-serif">
     <div class="container flex justify-center">
-        <div class="flex flex-col py-16 space-y-2">
+        <div class="flex flex-col py-16 space-y-2 text-slate-50">
             <div class="flex justify-center text-center">
-                <p class="text-center text-xl font-medium">minor heading text here</p>
+                <p class="text-center text-xl font-medium text-amber-500">Collaborative synergy.</p>
             </div>
             <div class="flex justify-center text-center">
-                <h1 class="text-center text-4xl font-medium">Our Barbers</h1>
-            </div>
-            <div class="flex justify-center text-center pb-5">
-                .......................................
+                <h1 class="text-center text-4xl font-bold text-amber-500 pb-5">Our Team</h1>
             </div>
             <div class="flex justify-center items-center">
                 <div class="container">
@@ -35,8 +32,9 @@
 
                                     <!-- Text hidden by default, shown on group hover -->
                                     <div
-                                        class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100">
-                                        <p class="text-center text-white">{{ $result->fname . ' ' . $result->lname }}</p>
+                                        class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 container items-center">
+                                        <p class="text-center text-white text-lg font-bold">{{ $result->fname . ' ' . $result->lname }}</p>
+                                        <p class="text-center text-base font-serif font-medium">{{ $result->position }}</p>
                                     </div>
                                 </div>
                             </div>

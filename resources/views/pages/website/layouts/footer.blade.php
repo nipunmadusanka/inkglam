@@ -1,7 +1,7 @@
-<footer class="text-stone-300 bg-[#3E3232]">
+<footer class="text-stone-300 bg-[#1f1f1f]">
     <div class="container px-6 py-12 mx-auto">
-        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-y-10 lg:grid-cols-4">
-            <div class="sm:col-span-2">
+        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 justify-center sm:gap-y-10 lg:grid-cols-5">
+            {{-- <div class="sm:col-span-2">
                 <h1 class="max-w-lg text-xl font-semibold tracking-tight text-gray-800 xl:text-2xl dark:text-white">Subscribe our newsletter to get update.</h1>
 
                 <div class="flex flex-col mx-auto mt-6 space-y-3 md:space-y-0 md:flex-row">
@@ -11,25 +11,160 @@
                         Subscribe
                     </button>
                 </div>
-            </div>
-
+            </div> --}}
             <div>
-                <p class="font-semibold text-gray-800 dark:text-white">Quick Link</p>
+                <p class="font-semibold text-amber-500 ">About Us</p>
 
                 <div class="flex flex-col items-start mt-5 space-y-2">
-                    <a href="#" class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500">Home</a>
-                    <a href="#" class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500">Home</a>
-                    <a href="#" class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500">Home</a>
+                    Welcome to a team of experienced professionals committed to providing innovative solutions and
+                    exceptional service tailored to your unique needs. With a wealth of expertise, we prioritize your
+                    satisfaction, delivering excellence
                 </div>
             </div>
 
             <div>
-                <p class="font-semibold text-gray-800 dark:text-white">Industries</p>
+                <p class="font-semibold text-amber-500 ">Short Link</p>
 
                 <div class="flex flex-col items-start mt-5 space-y-2">
-                    <a href="#" class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500">Retail & E-Commerce</a>
-                    <a href="#" class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500">Retail & E-Commerce</a>
-                    <a href="#" class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500">Retail & E-Commerce</a>
+                    <a href="#"
+                        class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500">Home</a>
+                    <a href="#"
+                        class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500">About
+                        Us</a>
+                    <a href="#"
+                        class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500">Our
+                        Services</a>
+                </div>
+            </div>
+            <div>
+                <p class="font-semibold text-amber-500 ">Working Houres</p>
+
+                <div class="flex flex-col items-start mt-5 space-y-2">
+                    <div class="flex">
+                        <div class="grid grid-cols-5 gap-1">
+                            <div class=" items-start col-span-1">
+                                <p
+                                class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 ">
+                                MON: </p>
+                            </div>
+                            <div class=" items-start col-span-4">
+                                <p
+                                class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 ">
+                                 8.30AM - 10.30PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex">
+                        <div class="grid grid-cols-5 gap-1">
+                            <div class=" items-start col-span-1">
+                                <p
+                                class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 ">
+                                TUE: </p>
+                            </div>
+                            <div class=" items-start col-span-4">
+                                <p
+                                class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 ">
+                                 8.30AM - 10.30PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex">
+                        <div class="grid grid-cols-5 gap-1">
+                            <div class=" items-start col-span-1">
+                                <p
+                                class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 ">
+                                WED: </p>
+                            </div>
+                            <div class=" items-start col-span-4">
+                                <p
+                                class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 ">
+                                 8.30AM - 10.30PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex">
+                        <div class="grid grid-cols-5 gap-1">
+                            <div class=" items-start col-span-1">
+                                <p
+                                class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 ">
+                                THU: </p>
+                            </div>
+                            <div class=" items-start col-span-4">
+                                <p
+                                class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 ">
+                                 8.30AM - 10.30PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex">
+                        <div class="grid grid-cols-5 gap-1">
+                            <div class=" items-start col-span-1">
+                                <p
+                                class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 ">
+                                FRI: </p>
+                            </div>
+                            <div class=" items-start col-span-4">
+                                <p
+                                class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 ">
+                                 8.30AM - 10.30PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex">
+                        <div class="grid grid-cols-5 gap-1">
+                            <div class=" items-start col-span-1">
+                                <p
+                                class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 ">
+                                MON: </p>
+                            </div>
+                            <div class=" items-start col-span-4">
+                                <p
+                                class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 ">
+                                 8.30AM - 10.30PM</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- <p
+                        class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 ">
+                        TUE: 8.30AM - 10.30PM</p>
+                    <p
+                        class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 ">
+                        WED: 8.30AM - 10.30PM</p>
+                    <p
+                        class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 ">
+                        THU: 8.30AM - 10.30PM</p>
+                    <p
+                        class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 ">
+                        FRI: 8.30AM - 10.30PM</p> --}}
+                    <p
+                        class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 ">
+                        SAT: Weekend</p>
+                    <p
+                        class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 ">
+                        SUN: Weekend</p>
+                </div>
+            </div>
+            <div>
+                <p class="font-semibold text-amber-500 ">Contact Us</p>
+
+                <div class="flex flex-col items-start mt-5 space-y-2">
+                    <p
+                        class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 ">
+                        +123456789</p>
+                    <p
+                        class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 ">
+                        inkandglam@gmial.com</p>
+                    <p
+                        class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 ">
+                        Colombo 06, Mount Lavenia Road, Galkissa</p>
+                </div>
+            </div>
+            <div>
+                <p class="font-semibold text-amber-500 ">Location</p>
+
+                <div class="flex flex-col items-start mt-5 space-y-2">
+                    <img class=" bg-cover w-auto object-cover h-full" src={{ asset('map.png') }} />
                 </div>
             </div>
         </div>
@@ -42,7 +177,9 @@
             </a>
 
             <div class="flex -mx-2">
-                <a href="#" class="mx-2 text-gray-600 transition-colors duration-300 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" aria-label="Reddit">
+                <a href="#"
+                    class="mx-2 text-gray-600 transition-colors duration-300 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
+                    aria-label="Reddit">
                     <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -51,7 +188,9 @@
                     </svg>
                 </a>
 
-                <a href="#" class="mx-2 text-gray-600 transition-colors duration-300 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" aria-label="Facebook">
+                <a href="#"
+                    class="mx-2 text-gray-600 transition-colors duration-300 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
+                    aria-label="Facebook">
                     <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -60,7 +199,9 @@
                     </svg>
                 </a>
 
-                <a href="#" class="mx-2 text-gray-600 transition-colors duration-300 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" aria-label="Github">
+                <a href="#"
+                    class="mx-2 text-gray-600 transition-colors duration-300 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
+                    aria-label="Github">
                     <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
                         <path

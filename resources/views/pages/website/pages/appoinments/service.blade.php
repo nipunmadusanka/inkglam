@@ -1,9 +1,9 @@
-<div class="flex justify-center w-full h-full p-5 bg-slate-100">
+<div class="flex justify-center w-full h-full p-5 bg-black text-white">
     <div class="container flex items-center justify-center">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="justify-center grid-rows-2 top-0 p-3 md:order-1 order-2">
                 <div class="flex justify-center items-center p-3 top-0">
-                    <img class="h-full w-full m-2" src="{{ asset('images/'. $serviceData->image ) }}" alt="">
+                    <img class="h-full w-full m-2" src="{{ asset('images/' . $serviceData->image) }}" alt="">
                 </div>
             </div>
             <div class="flex justify-center top-0 p-3 md:order-2 order-1">
@@ -27,13 +27,13 @@
                                             <label for="number"
                                                 class="inline-block w-20 text-start font-bold text-gray-600">Select
                                                 Employee</label>
-                                            <select id="locationSelect" name="location"
+                                            <select id="locationSelect" name="employeId"
                                                 class="flex-1 py-2 border-b-2 border-gray-400
                                                 focus:border-green-400 text-gray-600 placeholder-gray-400 outline-none">
-                                                <option value="1">Surabaya</option>
-                                                <option value="2">Jakarta</option>
-                                                <option value="3">Bandung</option>
-                                                <option value="4">Tangerang</option>
+                                                @foreach ($employeesWithServices as $employee)
+                                                    <option value={{ $employee->id }} class="emId">
+                                                        {{ $employee->fname }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         {{-- <div class="grid grid-cols-1 mt-5 mx-7">
@@ -80,7 +80,21 @@
                 },
                 success: function(response) {
                     console.log(response);
-                    window.location.href = "{{ route('ourservices') }}";
+                    // Assuming response is an object with keys 'sId' and 'emId'
+
+                    if (response == 0) {
+                        var redirectLoginUrl = "/login";
+                        window.location.href = redirectLoginUrl;
+                    } else {
+                        var sId = response.sId;
+                        var emId = response.emId;
+                        // Build the URL with the provided route and parameters
+                        var redirectUrl = "/placeappoinmentview?sId=" + sId + "&emId=" +
+                            emId;
+                        // Redirect the user to the specified route
+                        window.location.href = redirectUrl;
+                    }
+
                 },
                 error: function(error) {
                     console.log(error.responseText);

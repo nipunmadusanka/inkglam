@@ -18,6 +18,7 @@ class Employe extends Model
         'address',
         'phone',
         'image',
+        'status',
 ];
 
     public function User(){

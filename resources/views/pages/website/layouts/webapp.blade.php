@@ -40,7 +40,7 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+    <div class="min-h-screen bg-black">
         @include('pages.website.layouts.navbar')
         <div class="flex flex-col h-screen">
 
@@ -54,7 +54,7 @@
                 @endif --}}
 
             <!-- Page Content -->
-            <div class="flex-1 bg-white dark:bg-gray-700">
+            <div class="flex-1 bg-black">
                 @if ($message = Session::get('success'))
                     <div class="w-full px-4 py-3 text-sm border rounded border-emerald-100 bg-emerald-50 text-emerald-500"
                         role="alert">

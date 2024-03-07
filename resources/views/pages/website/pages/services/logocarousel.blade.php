@@ -1,25 +1,19 @@
 <!-- Component: Logos carousel -->
-<div class="relative w-full glide-09 py-8">
+<div class="relative w-full glide-09 py-8 overflow-hidden">
     <!-- Slides -->
     <div data-glide-el="track">
         <ul class="whitespace-no-wrap flex-no-wrap [backface-visibility: hidden] [transform-style: preserve-3d] [touch-action: pan-Y] [will-change: transform] relative flex w-full overflow-hidden">
             <li>
-                <img src={{ asset('2.png') }} class="w-auto h-20 max-w-full max-h-full m-auto " />
+                <img src={{ asset('logo1.png') }} class="w-auto h-20 max-w-full max-h-full m-auto " />
             </li>
             <li>
-                <img src={{ asset('2.png') }} class="w-auto h-20 max-w-full max-h-full m-auto " />
+                <img src={{ asset('logo2.png') }} class="w-auto h-20 max-w-full max-h-full m-auto " />
             </li>
             <li>
-                <img src={{ asset('2.png') }} class="w-auto h-20 max-w-full max-h-full m-auto " />
+                <img src={{ asset('logo3.png') }} class="w-auto h-20 max-w-full max-h-full m-auto " />
             </li>
             <li>
-                <img src={{ asset('2.png') }} class="w-auto h-20 max-w-full max-h-full m-auto " />
-            </li>
-            <li>
-                <img src={{ asset('2.png') }} class="w-auto h-20 max-w-full max-h-full m-auto " />
-            </li>
-            <li>
-                <img src={{ asset('2.png') }} class="w-auto h-20 max-w-full max-h-full m-auto " />
+                <img src={{ asset('logo4.png') }} class="w-auto h-20 max-w-full max-h-full m-auto " />
             </li>
         </ul>
     </div>
