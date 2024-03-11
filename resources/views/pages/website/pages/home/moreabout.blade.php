@@ -24,12 +24,12 @@
             </div>
             <div class="flex justify-center">
                 <div class="grid grid-cols-6 col-span-2 gap-2 p-5">
-                    <div class=" overflow-hidden rounded-xl col-span-3 max-h-[14rem]">
-                        <img class="h-full w-full object-cover " src="{{ asset('1.jpg') }}" alt="">
-                    </div>
-                    <div class=" overflow-hidden rounded-xl col-span-3 max-h-[14rem]">
-                        <img class="h-full w-full object-cover  " src="{{ asset('2.jpg') }}" alt="">
-                    </div>
+                    @foreach ($twoImages as $twoImages)
+                        <div class=" overflow-hidden rounded-xl col-span-3 max-h-[14rem]">
+                            <img class="h-full w-full object-cover "
+                                src="{{ asset('imagegallry/' . $twoImages->image) }}" alt="">
+                        </div>
+                    @endforeach
                     <div class=" overflow-hidden rounded-xl col-span-2 max-h-[10rem]">
                         <img class="h-full w-full object-cover " src="{{ asset('3.jpg') }}" alt="">
                     </div>
@@ -37,10 +37,12 @@
                         <img class="h-full w-full object-cover " src="{{ asset('4.jpg') }}" alt="">
                     </div>
                     <div class="relative overflow-hidden rounded-xl col-span-2 max-h-[10rem]">
-                        {{-- <div
-                            class="text-white text-xl absolute inset-0  bg-slate-900/80 flex justify-center items-center">
-                            + 23
-                        </div> --}}
+                        <a href="{{ Route('pages.viewgallery') }}">
+                            <div
+                                class="text-white text-xl absolute inset-0  bg-slate-900/80 flex justify-center items-center">
+                                + 9
+                            </div>
+                        </a>
                         <img class="h-full w-full object-cover " src="{{ asset('5.jpg') }}" alt="">
                     </div>
                 </div>

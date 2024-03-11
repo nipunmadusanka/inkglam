@@ -1,4 +1,4 @@
-<div class="flex justify-center items-center p-5 w-full h-auto bg-black font-serif">
+<div class="flex justify-center items-center p-5 w-full h-auto bg-[#343232] font-serif">
     <div class="container flex justify-center">
         <div class="flex flex-col py-16 space-y-2 text-slate-50">
             {{-- <div class="flex justify-center text-center">
@@ -24,7 +24,8 @@
                                     </p>
                                 </div>
                             </div> --}}
-                            <a href={{ Route('service.appoinment', ['id' => $result->id]) }} class="bg-[#B2B2B2]">
+                            <a href={{ Route('service.appoinment', ['id' => $result->id]) }}
+                                class="bg-[#B2B2B2] rounded-lg">
                                 <div x-data="{ loaded: false }" x-ref="content" x-init="() => {
                                     let observer = new IntersectionObserver((entries) => {
                                         entries.forEach(entry => {
@@ -36,17 +37,19 @@
                                     });
                                     observer.observe($refs.content);
                                 }"
-                                    class="flex justify-center py-3 p-6 overflow-hidden transition-all duration-500 ease-in-out transform opacity-0"
+                                    class="flex justify-center py-3 p-3 overflow-hidden transition-all duration-500 ease-in-out transform opacity-0"
                                     x-bind:class="{ 'opacity-100 translate-y-0': loaded }">
-                                    <div class="items-center space-y-2 text-black">
+                                    <div class="items-center text-black grid grid-rows-2">
                                         <div class="flex justify-center">
-                                        <img src="{{ asset('images/' . $result->image) }}" alt={{ $result->name }}
-                                            class="block p-5 h-48 w-auto fill-current text-gray-800 dark:text-gray-200 focus:shadow-outline shadow-lg" />
+                                            <img src="{{ asset('mainservice/' . $result->image) }}" alt={{ $result->name }}
+                                                class="block p-5 h-48 w-full fill-current text-gray-800 object-cover dark:text-gray-200 focus:shadow-outline" />
                                         </div>
+                                        <div class="space-y-2 p-3">
                                             <h1 class="text-center text-4xl font-medium">{{ $result->name }}</h1>
-                                        <p class="text-center font-serif text-sm">
-                                            {{ implode(' ', array_slice(str_word_count(strip_tags($result->description), 1), 0, 15)) }}
-                                        </p>
+                                            <p class="text-center font-serif text-sm">
+                                                {{ implode(' ', array_slice(str_word_count(strip_tags($result->description), 1), 0, 15)) }}
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </a>

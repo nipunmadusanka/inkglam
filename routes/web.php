@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AppoinmentController;
+use App\Http\Controllers\AppoinmentCustomerController;
+use App\Http\Controllers\MainServiceController;
+use App\Http\Controllers\SettingsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +21,8 @@ use App\Http\Controllers\AppoinmentController;
 |
 */
 
+Route::get('/test', [HomeController::class, 'test'])->name('test');
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [HomeController::class, 'about'])->name('aboutus');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
@@ -29,20 +34,26 @@ Route::get('/placeappoinmentview', [HomeController::class, 'placeAppoinmentView'
 Route::post('/placeappoinment', [HomeController::class, 'placeAppoinment'])->name('placeappoinment');
 Route::post('/letstalk', [HomeController::class, 'letStalk'])->name('letstalk');
 Route::get('/letstalkscontacts', [HomeController::class, 'letsTalksContacts'])->name('letstalkscontacts');
-
+Route::get('/employeeview/{id}', [HomeController::class, 'employeeView'])->name('employeeview');
+Route::get('/viewgallery', [HomeController::class, 'viewGallery'])->name('pages.viewgallery');
 
 Route::get('/alluseradmin', [HomeController::class, 'alluseradmin'])->name('alluseradmin');
-
 
 Route::get('/dashboard', function () {
     return view('pages.dashboard.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/viewproducts', [ProductController::class, 'viewProduct'])->name('pages.productview');
-Route::get('/addproduct', [ProductController::class, 'addProduct'])->name('pages.addproduct');
+Route::get('/viewmainservices', [MainServiceController::class, 'viewMainServices'])->name('pages.viewmainservices');
+Route::get('/viewaddnewservices', [MainServiceController::class, 'viewAddNewServices'])->name('pages.viewaddnewservices');
+Route::post('/addnewservices', [MainServiceController::class, 'addNewServices'])->name('addnewservices');
+Route::get('/viewsubproducts/{id}', [MainServiceController::class, 'viewSubProducts'])->name('pages.viewsubproducts');
+Route::post('/services/destroy', [MainServiceController::class, 'destroyService'])->name('services.destroy');
+Route::post('/services/active', [MainServiceController::class, 'activeService'])->name('services.active');
+Route::post('/mainservice/deactive', [MainServiceController::class, 'mainServiceDeactive'])->name('mainservice.deactive');
+Route::post('/mainservice/active', [MainServiceController::class, 'mainServiceActive'])->name('mainservice.active');
+
+Route::get('/addproduct/{mId}', [ProductController::class, 'addProduct'])->name('pages.addproduct');
 Route::post('/addnewproduct', [ProductController::class, 'addNewProduct'])->name('addnewproduct');
-Route::post('/services/destroy', [ProductController::class, 'destroyService'])->name('services.destroy');
-Route::post('/services/active', [ProductController::class, 'activeService'])->name('services.active');
 Route::get('/editservice/{id}', [ProductController::class, 'editService'])->name('page.editservice');
 Route::put('/updateservice/{id}', [ProductController::class, 'updateService'])->name('updateservice');
 
@@ -60,6 +71,14 @@ Route::get('/viewemployeinfo/{id}', [EmployeeController::class, 'viewemployeinfo
 Route::get('/appoinmentadmin', [AppoinmentController::class, 'appoinmentadmin'])->name('appoinmentadmin');
 Route::post('/appoinmentaccept', [AppoinmentController::class, 'appoinmentAccept'])->name('appoinmentaccept');
 Route::post('/appoinmentreject', [AppoinmentController::class, 'appoinmentReject'])->name('appoinmentreject');
+
+Route::get('/appoinmentcustomer', [AppoinmentCustomerController::class, 'appoinmentCustomer'])->name('appoinmentcustomer');
+
+Route::get('/viewsettings', [SettingsController::class, 'viewSettings'])->name('pages.viewsettings');
+Route::get('/gallerysetting', [SettingsController::class, 'gallerySetting'])->name('gallerysetting');
+Route::post('/addgalleryimage', [SettingsController::class, 'addGalleryImgage'])->name('addgalleryimage');
+Route::post('/gallery/deactive', [SettingsController::class, 'deactiveGallery'])->name('gallery.deactive');
+Route::post('/gallery/active', [SettingsController::class, 'activeGallery'])->name('gallery.active');
 
 
 Route::middleware('auth')->group(function () {

@@ -4,17 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\NewAppoinments as NewAppoinmentsModel;
+use Illuminate\Support\Facades\Auth;
 
 class AppoinmentController extends Controller
 {
     //
     public function appoinmentadmin()
     {
-        $appoinment = NewAppoinmentsModel::with('employe')->get();
-        return view('pages.appoinments.appoinments', ['result' => $appoinment]);
+        if (Auth::check()) {
+            $appoinment = NewAppoinmentsModel::with('employe')->get();
+            return view('pages.appoinments.appoinments', ['result' => $appoinment]);
+        } else {
+            return redirect('/');
+        }
     }
 
-    public function appoinmentReject(Request $request) {
+    public function appoinmentReject(Request $request)
+    {
         $data = json_decode($request->getContent(), true);
         $id = $data['rejectId'];
 
@@ -32,7 +38,8 @@ class AppoinmentController extends Controller
         }
     }
 
-    public function appoinmentAccept(Request $request) {
+    public function appoinmentAccept(Request $request)
+    {
         $data = json_decode($request->getContent(), true);
         $id = $data['completedId'];
 

@@ -6,21 +6,28 @@ use App\Models\Employe as EmployeeModel;
 use App\Models\Product as ProductModel;
 use App\Models\Employee_has_services as EmployeeHasServices;
 use App\Models\NewAppoinments as NewAppoinments;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
 
 class EmployeeController extends Controller
 {
     //
     public function viewEmploye()
     {
-        $id = Auth::user()->user_type;
-        if ($id == 0) {
-            $result = EmployeeModel::all();
-            return view('pages.employee.employee', ['result' => $result]);
+        if (Auth::check()) {
+            $id = Auth::user()->user_type;
+            if ($id == 0) {
+                $result = EmployeeModel::all();
+                return view('pages.employee.employee', ['result' => $result]);
+            } else {
+                return view('pages.dashboard.dashboard');
+            }
         } else {
-            return view('pages.dashboard.dashboard');
+            return redirect('/');
         }
     }
     public function addEmployee()
@@ -68,7 +75,21 @@ class EmployeeController extends Controller
 
     public function addNewEmployee(Request $request)
     {
-        $my_id = Auth::id();
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'nic' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+        $user_type = 1;
+        $user = User::create([
+            'name' => $request->name,
+            'nic' => $request->nic,
+            'user_type' => $user_type,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+        $my_id = $user->id;
         $request->validate([
             'fname' => 'required',
             'lname' => 'required',

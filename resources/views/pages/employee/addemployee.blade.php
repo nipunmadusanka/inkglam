@@ -21,41 +21,84 @@
                         <label class="uppercase md:text-sm text-xs text-white text-light font-semibold">First
                             Name</label>
                         <input
-                            class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                            type="text" name="fname" placeholder="First Name" />
+                            class="py-2 px-3 border-2 mt-1 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                            type="text" name="fname" placeholder="First Name" autofocus/>
                     </div>
                     <div class="grid grid-cols-1 mt-5 mx-7">
                         <label class="uppercase md:text-sm text-xs text-white text-light font-semibold">Last
                             name</label>
                         <input
-                            class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                            class="py-2 px-3 border-2 mt-1 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
                             type="text" name="lname" placeholder="Last Name" />
                     </div>
                     <div class="grid grid-cols-1 mt-5 mx-7">
+                        <x-input-label for="name" :value="__('User Name')" class="uppercase md:text-sm text-xs text-white text-light font-semibold"/>
+                        <x-text-input id="name" class="py-2 px-3 border-2 mt-1 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                        type="text" name="name" :value="old('name')" required placeholder="User Name"/>
+                        <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                    </div>
+                    {{-- <div class="grid grid-cols-1 mt-5 mx-7">
                         <label class="uppercase md:text-sm text-xs text-white text-light font-semibold">Email</label>
                         <input
-                            class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                            class="py-2 px-3 border-2 mt-1 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
                             type="email" name="email" placeholder="Email" />
+                    </div> --}}
+                    <div class="grid grid-cols-1 mt-5 mx-7">
+                        <x-input-label for="email" :value="__('Email')"
+                            class="uppercase md:text-sm text-xs text-white text-light font-semibold" />
+                        <x-text-input id="email"
+                            class="py-2 px-3 border-2 mt-1 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                            type="email" name="email" :value="old('email')" required placeholder="Email" />
+                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
+
+                    </div>
+                    <div class="grid grid-cols-1 mt-5 mx-7">
+                        <x-input-label for="nic" :value="__('Nic')" class="uppercase md:text-sm text-xs text-white text-light font-semibold"/>
+                        <x-text-input id="nic" class="py-2 px-3 border-2 mt-1 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                        type="text" name="nic" :value="old('nic')" required autofocus placeholder="NIC" />
+                        <x-input-error :messages="$errors->get('nic')" class="mt-2" />
                     </div>
                     <div class="grid grid-cols-1 mt-5 mx-7">
                         <label class="uppercase md:text-sm text-xs text-white text-light font-semibold">Position</label>
                         <input
-                            class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                            class="py-2 px-3 border-2 mt-1 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
                             type="text" name="position" placeholder="Position" />
                     </div>
                     <div class="grid grid-cols-1 mt-5 mx-7">
                         <label class="uppercase md:text-sm text-xs text-white text-light font-semibold">Address</label>
                         <input
-                            class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                            class="py-2 px-3 border-2 mt-1 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
                             type="text" name="address" placeholder="Address" />
                     </div>
                     <div class="grid grid-cols-1 mt-5 mx-7">
                         <label class="uppercase md:text-sm text-xs text-white text-light font-semibold">Phone
                             Number</label>
                         <input
-                            class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                            class="py-2 px-3 border-2 mt-1 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
                             type="text" name="phone" placeholder="Phone Number" />
                     </div>
+                    <div class="grid grid-cols-1 mt-5 mx-7">
+                        <x-input-label for="password" :value="__('Password')" class="uppercase md:text-sm text-xs text-white text-light font-semibold"/>
+
+                        <x-text-input id="password" class="py-2 px-3 border-2 mt-1 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                                        type="password"
+                                        name="password"
+                                        required autocomplete="new-password" placeholder="Password"/>
+
+                        <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div class="grid grid-cols-1 mt-5 mx-7">
+                        <x-input-label for="password_confirmation" :value="__('Confirm Password')" class="uppercase md:text-sm text-xs text-white text-light font-semibold"/>
+
+                        <x-text-input id="password_confirmation" class="py-2 px-3 border-2 mt-1 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                                        type="password"
+                                        name="password_confirmation" required autocomplete="new-password" placeholder="Confirm Password"/>
+
+                        <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                    </div>
+
                     <div class="grid grid-cols-1 mt-5 mx-7">
                         <label class="uppercase md:text-sm text-xs text-white text-light font-semibold mb-1">Employee
                             Photo</label>

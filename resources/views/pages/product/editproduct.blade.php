@@ -24,14 +24,22 @@
                         <label class="uppercase md:text-sm text-xs text-white text-light font-semibold">name</label>
                         <input
                             class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                            type="text" name="name" value={{ $result->name }} />
+                            type="text" name="name" value={{ $result->name }} placeholder={{ $result->name }}/>
+                        @error('name')
+                            <span class="text-red-500 text-xs">{{ $message }}</span>
+                        @enderror
+                        <span id="nameError" class="text-red-500 text-xs"></span>
                     </div>
                     <div class="grid grid-cols-1 mt-5 mx-7">
                         <label
-                            class="uppercase md:text-sm text-xs text-white text-light font-semibold">description</label>
-                        <input
+                            class="uppercase md:text-sm text-xs text-white text-light font-semibold">Description</label>
+                        <textarea
                             class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                            type="text" name="description" value={{ $result->description }} />
+                            name="description" placeholder="{{ $result->description }}" value={{ $result->description }}>{{ $result->description }}</textarea>
+                        @error('description')
+                            <span class="text-red-500 text-xs">{{ $message }}</span>
+                        @enderror
+                        <span id="descriptionError" class="text-red-500 text-xs"></span>
                     </div>
 
                     <div class="grid grid-cols-1 mt-5 mx-7">
@@ -39,36 +47,10 @@
                         <input
                             class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                             type="text" name="price" value={{ $result->price }} />
+                        @error('price')
+                            <span class="text-red-500 text-xs">{{ $message }}</span>
+                        @enderror
                     </div>
-
-
-                    {{-- <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7">
-
-                    <div class="grid grid-cols-1">
-                        <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">price</label>
-                        <input
-                            class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                            type="text" name="price" placeholder="price" />
-                    </div>
-                    <div class="grid grid-cols-1">
-                        <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">discount</label>
-                        <input
-                            class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                            type="text" name="discount" placeholder="discount" />
-                    </div>
-                </div> --}}
-
-                    {{-- <div class="grid grid-cols-1 mt-5 mx-7">
-                    <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Selection</label>
-                    <select
-                        class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent">
-                        <option>Option 1</option>
-                        <option>Option 2</option>
-                        <option>Option 3</option>
-                    </select>
-                </div> --}}
-
-
 
                     <div class="grid grid-cols-1 mt-5 mx-7">
                         <label class="uppercase md:text-sm text-xs text-white text-light font-semibold mb-1">Upload
@@ -90,7 +72,13 @@
 
                         </label> --}}
                             <img src="{{ asset('images/' . $result->image) }}" alt="image" class="w-16 mb-2" />
-                            <input type='file' class="" name="image" value={{ $result->image }} />
+                            <input type='file' class="image_validate" name="image" value={{ $result->image }}
+                                id="updatedImage" />
+
+                            @error('image')
+                                <span class="text-red-500 text-xs">{{ $message }}</span>
+                            @enderror
+                            <span id="imageError" class=" text-red-500 text-xs"></span>
                         </div>
                     </div>
 
@@ -105,3 +93,29 @@
         </div>
     @endif
 </x-app-layout>
+
+<script>
+    $(document).ready(function() {
+        $('input.image_validate').on('change', function() {
+            var image = $(this).val().trim();
+            var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+            var maxSize = 1 * 1024 * 1024; // 1 MB
+
+            // Validate file type
+            if (!allowedExtensions.exec(image)) {
+                $('#imageError').text('Please upload a valid JPG or PNG image');
+                return false;
+            }
+
+            // Validate file size
+            var fileSize = this.files[0].size;
+            if (fileSize > maxSize) {
+                $('#imageError').text('File size must be less than 1 MB');
+                return false;
+            }
+
+            // If the image is valid, clear the error message
+            $('#imageError').text('');
+        });
+    });
+</script>

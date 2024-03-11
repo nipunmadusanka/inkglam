@@ -1,5 +1,5 @@
-<div class="flex justify-center w-full h-auto p-4 bg-[#181818] ">
-    <div class="container items-center bg-white shadow-md">
+<div class="flex justify-center w-full h-auto p-4 bg-[#343232] ">
+    <div class="container items-center bg-[#B2B2B2] shadow-md rounded-xl">
         <div class="flex flex-col">
             <div class="items-start p-2 py-4">Ratings & Reviews</div>
             @foreach ($ratings as $rating)
@@ -10,7 +10,7 @@
 
                             <div class='flex flex-row gap-3'>
                                 @for ($i = 0; $i < $rating->star; $i++)
-                                    <svg class="h h-5 transition-all duration-100  fill-yellow-500 cursor-pointer"
+                                    <svg class="h h-5 transition-all duration-100  fill-yellow-300 cursor-pointer"
                                         viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
                                         xmlns:xlink="http://www.w3.org/1999/xlink">
                                         <path

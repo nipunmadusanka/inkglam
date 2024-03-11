@@ -1,4 +1,4 @@
-<div class="flex justify-center w-full h-full p-5 bg-black text-white">
+<div class="flex justify-center w-full h-full p-5 bg-[#343232] text-white">
     <div class="container flex items-center justify-center">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="justify-center grid-rows-2 top-0 p-3 md:order-1 order-2">

@@ -1,5 +1,5 @@
 <!-- Component: Logos carousel -->
-<div class="relative w-full glide-09 py-8 overflow-hidden">
+<div class="relative w-full glide-09 py-8 overflow-hidden bg-[#343232]">
     <!-- Slides -->
     <div data-glide-el="track">
         <ul class="whitespace-no-wrap flex-no-wrap [backface-visibility: hidden] [transform-style: preserve-3d] [touch-action: pan-Y] [will-change: transform] relative flex w-full overflow-hidden">

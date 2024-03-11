@@ -11,18 +11,30 @@ use App\Models\Timeslot as TimeslotModel;
 use App\Models\NewAppoinments as NewAppoinmentsModel;
 use App\Models\User as UserModel;
 use App\Models\Letstalk as LetstalkModel;
+use App\Models\Mainservice_has_Products as HasProductsModel;
+use App\Models\Mainservice as MainServicesModel;
+use App\Models\Imagegallery as ImagegalleryModel;
 use Illuminate\Support\Facades\Auth;
 use PHPUnit\Metadata\Uses;
 
 class HomeController extends Controller
 {
     //
+    public function test()
+    {
+        return view('pages.website.pages.test.test');
+    }
 
     public function index()
     {
-        $data = ServiceModel::where('status', 1)->get();
+        $data = MainServicesModel::where('status', 1)->get();
         $employeedata = EmployeeModel::where('status', 1)->get();
-        return view('pages.website.pages.home.home', ['serviceData' => $data, 'employeedata' => $employeedata]);
+        $twoImages = ImagegalleryModel::orderBy('created_at', 'desc')->where('status', '1')->take(2)->get();
+        return view('pages.website.pages.home.home', [
+            'serviceData' => $data,
+            'employeedata' => $employeedata,
+            'twoImages' => $twoImages,
+        ]);
     }
 
     public function about()
@@ -37,7 +49,7 @@ class HomeController extends Controller
 
     public function services()
     {
-        $service_data = ServiceModel::where('status', 1)->get();
+        $service_data = MainServicesModel::where('status', 1)->get();
         return view('pages.website.pages.services.services', ['serviceData' => $service_data]);
     }
 
@@ -165,15 +177,34 @@ class HomeController extends Controller
         return $request;
     }
 
+    public function employeeView($id)
+    {
+        return view('pages.website.pages.employee.employee');
+    }
+
+    public function viewGallery()
+    {
+        $data = ImagegalleryModel::orderBy('created_at', 'desc')->where('status', 1)->get();
+        return view('pages.website.pages.gallery.gallery', ['results' => $data]);
+    }
+
     public function letsTalksContacts()
     {
-        $result = LetstalkModel::get();
-        return view('pages.letstalks.letstalks', ['result' => $result]);
+        if (Auth::check()) {
+            $result = LetstalkModel::get();
+            return view('pages.letstalks.letstalks', ['result' => $result]);
+        } else {
+            return redirect('/');
+        }
     }
 
     public function alluseradmin()
     {
-        $usersWithType2 = UserModel::where('user_type', 2)->get();
-        return view('pages.users.users', ['result' => $usersWithType2]);
+        if (Auth::check()) {
+            $usersWithType2 = UserModel::where('user_type', 2)->get();
+            return view('pages.users.users', ['result' => $usersWithType2]);
+        } else {
+            return redirect('/');
+        }
     }
 }

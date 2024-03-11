@@ -1,8 +1,9 @@
-<div class="flex justify-center w-full h-full p-5 bg-[#181818] border-b-2">
+<hr class=" bg-slate-300">
+<div class="flex justify-center w-full h-full p-5 bg-[#343232]">
     <div class="container flex items-center justify-center">
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
             <!-- component -->
-            <div class="">
+            <div class=" border-r">
                 <div class="grid grid-cols-8">
                     <div class="border-r-2 col-span-2 p-2 text-white">
                         <div class="items-start justify-start">
@@ -47,7 +48,7 @@
             <!-- comment form -->
             @auth
 
-                <div class="mx-auto items-center justify-center shadow-lg max-w-lg bg-white">
+                <div class="mx-auto items-center justify-center shadow-lg max-w-lg bg-[#B2B2B2] rounded-lg">
 
                     <div id="alertDiv"
                         class="w-auto px-4 py-3 m-5 text-sm border rounded border-emerald-500 bg-emerald-50 text-emerald-500"
@@ -58,7 +59,7 @@
                     <!-- component -->
                     <div class='rating flex flex-row gap-3 my-6 px-4'>
                         <svg id="1"
-                            class="h-12 transition-all duration-100 fill-gray-400  fill-yellow-500  cursor-pointer"
+                            class="h-12 transition-all duration-100 fill-gray-400  fill-yellow-300  cursor-pointer"
                             viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink">
                             <path
@@ -104,7 +105,7 @@
                             <h2 class="px-4 pt-3 pb-2 text-gray-800 text-lg">Add a new Reviews</h2>
                             <div class="w-full md:w-full px-3 mb-2 mt-2">
                                 <textarea
-                                    class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
+                                    class="bg-gray-200 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
                                     name="rating" id="rating" placeholder='Type Your Comment' required></textarea>
                             </div>
                             <div class="w-full md:w-full flex items-start md:w-full px-3">
@@ -139,12 +140,12 @@
         svgs[i].onclick = () => {
             for (let j = 0; j <= i; j++) {
                 svgs[j].classList.add(
-                    "fill-yellow-500"); // this class should be added to whitelist while in production mode
+                    "fill-yellow-300"); // this class should be added to whitelist while in production mode
             }
             for (let k = i + 1; k < svgs.length; k++) {
 
                 svgs[k].classList.remove(
-                    "fill-yellow-500"); // this class should be added to whitelist while in production mode
+                    "fill-yellow-300"); // this class should be added to whitelist while in production mode
             }
         }
     }

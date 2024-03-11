@@ -39,7 +39,7 @@
                                 class="flex justify-center bg-[#B2B2B2] py-2 p-4 overflow-hidden transition-all duration-500 ease-in-out transform opacity-0"
                                 x-bind:class="{ 'opacity-100 translate-y-0': loaded }">
                                 <div class="items-center flex flex-col justify-center space-y-5">
-                                    <img src="{{ asset('images/' . $result->image) }}" alt="logo"
+                                    <img src="{{ asset('mainservice/' . $result->image) }}" alt="logo"
                                         class="block p-5 h-2/4 w-auto fill-current text-gray-800 dark:text-gray-200 focus:shadow-outline shadow-lg " />
                                     <h1 class="text-center text-4xl font-medium">{{ $result->name }}</h1>
                                     <p class="text-center font-serif text-sm">

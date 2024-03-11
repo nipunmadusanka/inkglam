@@ -3,26 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product as ProductModel;
+use App\Models\Mainservice_has_Product as Has_Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
 {
-    //
-    public function viewProduct()
-    {
-        $result = ProductModel::all();
-        return view('pages.product.product', ['result' => $result]);
-    }
 
-    public function addProduct()
+    public function addProduct($mId)
     {
-        return view('pages.product.addproduct');
+        return view('pages.product.addproduct', ['mId' => $mId]);
     }
 
     public function addNewProduct(Request $request)
     {
+
         $my_id = Auth::id();
         $request->validate([
             'name' => 'required',
@@ -42,37 +39,19 @@ class ProductController extends Controller
         $pro->image = $imageName;
 
         $pro->save();
-        return redirect('/viewproducts')->with('success', 'Successfully add service');
-    }
-
-    public function destroyService(Request $request)
-    {
-        $data = json_decode($request->getContent(), true);
-        $item = $data['deActiveId'];
-        $product = ProductModel::find($item);
-        if ($product) {
-            $product->update(['status' => '0']);
-            return redirect('/viewproducts')->with('success', 'Successfully updated status');
+        $pId = $pro->id;
+        Has_Product::create([
+            'uId' => $my_id,
+            'mId' => $request->mId,
+            'pId' => $pId,
+        ]);
+        if (Session('main_cat_url')) {
+            return redirect(Session('main_cat_url'))->with('success', 'Successfully updated status');
         } else {
-            return redirect('/viewproducts')->with('error', 'Product not found');
+            return redirect('/viewmainservices')->with('success', 'Successfully updated status');
         }
     }
 
-    public function activeService(Request $request)
-    {
-        $data = json_decode($request->getContent(), true);
-        $item = $data['activeId'];
-
-        $product = ProductModel::find($item);
-        if ($product) {
-            $product->update([
-                'status' => '1',
-            ]);
-            return redirect('/viewproducts')->with('success', 'Successfully updated status');
-        } else {
-            return redirect('/viewproducts')->with('error', 'Product not found');
-        }
-    }
     public function editService($id)
     {
         $data = ProductModel::find($id);
@@ -81,13 +60,13 @@ class ProductController extends Controller
 
     public function updateService($id, Request $request)
     {
+
         $request->validate([
             'name' => 'required',
             'description' => 'required',
             'price' => 'required',
         ]);
         $row = ProductModel::find($id);
-
         $getimage = DB::select('select image from products where id = ?', [$id]);
         foreach ($getimage as $img) {
             $imageName = $img->image;
@@ -110,6 +89,10 @@ class ProductController extends Controller
             'image' => $imageName,
         ]);
 
-        return redirect('/viewproducts')->with('success', 'Successfully update service');
+        if (Session('main_cat_url')) {
+            return redirect(Session('main_cat_url'))->with('success', 'Successfully updated status');
+        } else {
+            return redirect('/viewmainservices')->with('success', 'Successfully updated status');
+        }
     }
 }

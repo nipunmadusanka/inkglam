@@ -39,9 +39,9 @@
                             <th
                                 class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
                                 Actions</th>
-                            <th
+                            {{-- <th
                                 class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
-                                Info</th>
+                                Info</th> --}}
                         </tr>
                     </thead>
                     <tbody>
@@ -95,8 +95,8 @@
                                     <span
                                         class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Actions</span>
 
-                                    <div class="flex flex-row justify-center space-x-2"> <a
-                                            href={{ Route('page.editemployee', ['id' => $item->id]) }} class="">
+                                    <div class="flex flex-row justify-center space-x-2">
+                                        <a href={{ Route('page.editemployee', ['id' => $item->id]) }} class="">
                                             <button
                                                 class=" bg-sky-500 p-2 border-1 rounded-lg px-4 min-w-24">Edit</button>
                                         </a>
@@ -106,11 +106,15 @@
                                                 class=" bg-red-500 p-2 border-1 rounded-lg min-w-24 deactive">Deactivate</button>
                                         @elseif ($item->status == 0)
                                             <button type="submit"
-                                                class=" bg-green-500 p-2 border-1 rounded-lg min-w-24 active">Activate</button>
+                                                class=" bg-yellow-400 p-2 border-1 rounded-lg min-w-24 active">Activate</button>
                                         @endif
+                                        <a href={{ Route('viewemployeinfo', ['id' => $item->id]) }} class="">
+                                            <button
+                                                class=" bg-green-500 p-2 border-1 rounded-lg px-4 min-w-24">View</button>
+                                        </a>
                                     </div>
                                 </td>
-                                <td
+                                {{-- <td
                                     class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
                                     <span
                                         class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Info</span>
@@ -120,7 +124,7 @@
                                             <p class=" text-blue-600 ">View</p>
                                         </a>
                                     </div>
-                                </td>
+                                </td> --}}
                                 <?php $count++; ?>
                             </tr>
                         @endforeach

@@ -1,5 +1,5 @@
 <x-app-layout>
-    @if (Auth::user()->user_type == 0)
+    @if (Auth::user()->user_type == 0 || Auth::user()->user_type == 2)
         <div class="justify-center w-full h-auto bg-slate-400  p-5 mb-5">
             <div class="container flex items-center justify-center">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-1">
@@ -68,12 +68,22 @@
                     </div>
                 </div>
             </div>
-            <div class="flex item-end justify-end">
-                <a href="{{ Route('page.editemployee', ['id' => $result->id]) }}">
-                    <p class=" font-serif font-semibold text-lg text-blue-700"> Edit </p>
-                </a>
-            </div>
+            @if (Auth::user()->user_type == 0)
+                <div class="flex item-end justify-end">
+                    <a href="{{ Route('page.editemployee', ['id' => $result->id]) }}">
+                        <p class=" font-serif font-semibold text-lg text-blue-700"> Edit </p>
+                    </a>
+                </div>
+            @elseif (Auth::user()->user_type == 2)
+                <div class="flex item-end justify-end">
+                    <a href="{{ Route('employeeview', ['id' => $result->id]) }}">
+                        <p class=" font-serif font-semibold text-lg text-amber-400"> Rate Me </p>
+                    </a>
+                </div>
+            @endif
         </div>
-        @include('pages.employee.employeappoinment')
+        @if (Auth::user()->user_type == 0)
+            @include('pages.employee.employeappoinment')
+        @endif
     @endif
 </x-app-layout>

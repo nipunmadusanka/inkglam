@@ -7,7 +7,7 @@
         </a>
         @if (Auth::user()->user_type == 0)
             <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white"
-                href={{ Route('pages.productview') }}>
+                href={{ Route('pages.viewmainservices') }}>
                 <i class="fas fa-file-alt mr-2"></i>Services
             </a>
             <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white"
@@ -20,11 +20,20 @@
             </a>
             <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white"
                 href={{ Route('alluseradmin') }}>
-                <i class="fas fa-exchange-alt mr-2"></i>Users
+                <i class="fa fa-user mr-2"></i>Users
             </a>
             <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white"
                 href={{ Route('letstalkscontacts') }}>
-                <i class="fas fa-exchange-alt mr-2"></i>Let's Talks
+                <i class="fa fa-address-book mr-2"></i>Let's Talks
+            </a>
+            <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white"
+                href={{ Route('pages.viewsettings') }}>
+                <i class="fa fa-cog mr-2"></i>Settings
+            </a>
+        @elseif (Auth::user()->user_type == 2)
+            <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white"
+                href={{ Route('appoinmentcustomer') }}>
+                <i class="fas fa-store mr-2"></i>Appoinments
             </a>
         @endif
     </nav>
