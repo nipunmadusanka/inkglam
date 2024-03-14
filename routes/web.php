@@ -28,6 +28,9 @@ Route::get('/about', [HomeController::class, 'about'])->name('aboutus');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::get('/services', [HomeController::class, 'services'])->name('ourservices');
 Route::get('/appointment/{id}', [HomeController::class, 'appointment'])->name('service.appoinment');
+Route::get('/subservice/{id}', [HomeController::class, 'subService'])->name('service.subservice');
+Route::post('/addsubservice', [HomeController::class, 'addSubService'])->name('addsubservice');
+Route::post('/clearallservices', [HomeController::class, 'clearAllServices'])->name('clearallservices');
 Route::post('/makeappointment/{id}', [HomeController::class, 'makeAppointment'])->name('makeappointment');
 Route::post('/postratings/{id}', [HomeController::class, 'postRatings'])->name('postratings');
 Route::get('/placeappoinmentview', [HomeController::class, 'placeAppoinmentView'])->name('placeappoinmentview');
@@ -71,6 +74,7 @@ Route::get('/viewemployeinfo/{id}', [EmployeeController::class, 'viewemployeinfo
 Route::get('/appoinmentadmin', [AppoinmentController::class, 'appoinmentadmin'])->name('appoinmentadmin');
 Route::post('/appoinmentaccept', [AppoinmentController::class, 'appoinmentAccept'])->name('appoinmentaccept');
 Route::post('/appoinmentreject', [AppoinmentController::class, 'appoinmentReject'])->name('appoinmentreject');
+Route::post('/appoinmentconfirm', [AppoinmentController::class, 'appoinmentConfirm'])->name('appoinmentconfirm');
 
 Route::get('/appoinmentcustomer', [AppoinmentCustomerController::class, 'appoinmentCustomer'])->name('appoinmentcustomer');
 

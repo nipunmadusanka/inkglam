@@ -92,9 +92,11 @@
                                     @if ($item->status == 0)
                                         <span class="rounded bg-blue-400 py-1 px-3 text-xs font-bold">Pending</span>
                                     @elseif ($item->status == 1)
-                                        <span class="rounded bg-green-400 py-1 px-3 text-xs font-bold">Completed</span>
+                                        <span class="rounded bg-violet-500 py-1 px-3 text-xs font-bold">Confirm</span>
                                     @elseif ($item->status == 2)
                                         <span class="rounded bg-yellow-400 py-1 px-3 text-xs font-bold">Rejected</span>
+                                    @elseif ($item->status == 3)
+                                        <span class="rounded bg-green-400 py-1 px-3 text-xs font-bold">Completed</span>
                                     @endif
                                 </td>
 
@@ -107,15 +109,18 @@
                                         <input type="text" class="myId" hidden value='{{ $item->id }}' />
                                         @if ($item->status == 0)
                                             <button type="submit"
+                                                class=" bg-violet-500 p-2 border-1 rounded-lg min-w-24 confirm">Confirm</button>
+                                            <button type="submit"
+                                                class=" bg-red-500 p-2 border-1 rounded-lg min-w-24 rejected">Rejected</button>
+                                        @elseif ($item->status == 2)
+                                            <span class="text-xs font-bold">Rejected</span>
+                                        @elseif ($item->status == 1)
+                                            <button type="submit"
                                                 class=" bg-red-500 p-2 border-1 rounded-lg min-w-24 rejected">Rejected</button>
                                             <button type="submit"
                                                 class=" bg-green-500 p-2 border-1 rounded-lg min-w-24 completed">Completed</button>
-                                        @elseif ($item->status == 1)
-                                            <span
-                                                class="text-xs font-bold">Completed</span>
-                                        @elseif ($item->status == 2)
-                                            <span
-                                                class="text-xs font-bold">Rejected</span>
+                                        @elseif ($item->status == 3)
+                                            <span class="text-xs font-bold">Completed</span>
                                         @endif
                                     </div>
                                 </td>
@@ -179,6 +184,33 @@
                     type: 'POST',
                     data: JSON.stringify({
                         completedId: completedId,
+                    }),
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        window.location.reload();
+                    },
+                    error: function(error) {
+                        var response = JSON.parse(error.responseText);
+                    }
+                });
+            } else {
+                console.log('Please Click Active Button, If You Want to Active this Service');
+            }
+        });
+
+        $('.confirm').click(function(e) {
+            e.preventDefault();
+            var confirmdId = $(this).siblings('.myId').val();
+            if (confirmdId) {
+                $.ajax({
+                    url: '{{ route('appoinmentconfirm') }}',
+                    type: 'POST',
+                    data: JSON.stringify({
+                        confirmdId: confirmdId,
                     }),
                     processData: false,
                     contentType: false,

@@ -92,9 +92,11 @@
                                     @if ($item->status == 0)
                                         <span class="rounded bg-blue-400 py-1 px-3 text-xs font-bold">Pending</span>
                                     @elseif ($item->status == 1)
-                                        <span class="rounded bg-green-400 py-1 px-3 text-xs font-bold">Completed</span>
+                                        <span class="rounded bg-violet-500 py-1 px-3 text-xs font-bold">Confirm</span>
                                     @elseif ($item->status == 2)
                                         <span class="rounded bg-yellow-400 py-1 px-3 text-xs font-bold">Rejected</span>
+                                    @elseif ($item->status == 3)
+                                        <span class="rounded bg-green-400 py-1 px-3 text-xs font-bold">Complted</span>
                                     @endif
                                 </td>
 
@@ -109,12 +111,12 @@
                                             <button type="submit"
                                                 class=" bg-green-500 p-2 border-1 rounded-lg min-w-24 rejected">Edit</button>
                                         @elseif ($item->status == 1 || $item->status == 2)
-                                        <div class="flex flex-row justify-center space-x-2">
-                                            <a href={{ Route('service.appoinment', ['id' => $item->sId]) }} class="" target='_blank'>
-                                                <p class=" text-blue-600 ">Rate Us</p>
-                                            </a>
-                                        </div>
-
+                                            <div class="flex flex-row justify-center space-x-2">
+                                                <a href={{ Route('service.appoinment', ['id' => $item->sId]) }}
+                                                    class="" target='_blank'>
+                                                    <p class=" text-blue-600 ">Rate Us</p>
+                                                </a>
+                                            </div>
                                         @endif
                                     </div>
                                 </td>

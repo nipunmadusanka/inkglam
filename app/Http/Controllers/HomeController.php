@@ -11,10 +11,11 @@ use App\Models\Timeslot as TimeslotModel;
 use App\Models\NewAppoinments as NewAppoinmentsModel;
 use App\Models\User as UserModel;
 use App\Models\Letstalk as LetstalkModel;
-use App\Models\Mainservice_has_Products as HasProductsModel;
+use App\Models\Mainservice_has_Product as Has_ProductModel;
 use App\Models\Mainservice as MainServicesModel;
 use App\Models\Imagegallery as ImagegalleryModel;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use PHPUnit\Metadata\Uses;
 
 class HomeController extends Controller
@@ -51,6 +52,18 @@ class HomeController extends Controller
     {
         $service_data = MainServicesModel::where('status', 1)->get();
         return view('pages.website.pages.services.services', ['serviceData' => $service_data]);
+    }
+
+    public function subService($id)
+    {
+        $subproduct = Has_ProductModel::where('mId', $id)->where('status', 1)->with('Product')->get();
+
+
+
+        return view('pages.website.pages.appoinments.subservices', [
+            'subproduct' => $subproduct,
+
+        ]);
     }
 
     public function appointment($id)
@@ -186,6 +199,32 @@ class HomeController extends Controller
     {
         $data = ImagegalleryModel::orderBy('created_at', 'desc')->where('status', 1)->get();
         return view('pages.website.pages.gallery.gallery', ['results' => $data]);
+    }
+
+    public function addsubservice(Request $request)
+    {
+        // Session::forget('stored_data');
+
+        $id = $request->subId;
+        $formData = [
+            'subId' => $request->subId,
+            'name' => $request->name,
+            'price' => $request->price,
+        ];
+
+        $storedData = Session::get('stored_data', []);
+
+        if (!isset($storedData[$id])) {
+            $storedData[$id] = $formData;
+        }
+
+        Session::put('stored_data', $storedData);
+        return response()->json(['formData' => $storedData]);
+    }
+
+    public function clearAllServices() {
+        Session::forget('stored_data');
+        return redirect()->back();
     }
 
     public function letsTalksContacts()

@@ -24,7 +24,7 @@
                                     </p>
                                 </div>
                             </div> --}}
-                            <a href={{ Route('service.appoinment', ['id' => $result->id]) }}
+                            <a href={{ Route('service.subservice', ['id' => $result->id]) }}
                                 class="bg-[#B2B2B2] rounded-lg">
                                 <div x-data="{ loaded: false }" x-ref="content" x-init="() => {
                                     let observer = new IntersectionObserver((entries) => {
