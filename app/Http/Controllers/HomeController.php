@@ -227,6 +227,10 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
+    public function viewProductCategory() {
+        return view('pages.website.pages.products.products');
+    }
+
     public function letsTalksContacts()
     {
         if (Auth::check()) {

@@ -8,7 +8,7 @@ $emId = request('emId');
             <div class='flex items-center justify-center  md:gap-8 gap-4 pt-5 pb-5'>
                 {{-- <h1>sId: {{ $sId }}</h1>
                 <h1>emId: {{ $emId }}</h1> --}}
-                <form action="{{ Route('placeappoinment')}} " method="POST" enctype="multipart/form-data">
+                <form action="{{ Route('placeappoinment') }} " method="POST" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="grid grid-cols-1 md:grid-cols-2 md:gap-3 gap-0">
                         <input type="hidden" name="sId" value="{{ $sId }}" />
@@ -16,10 +16,12 @@ $emId = request('emId');
                         <div class="grid-rows-2 top-0 p-3 md:order-1">
                             <div class="grid grid-cols-1 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-black text-light font-semibold">
-                                    Name</label>
+                                    Name
+                                </label>
                                 <input
                                     class="py-2 px-3 rounded-lg border-2 border-orange-900 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                    type="text" name="name" placeholder="Name" value="{{ Auth::check() ? Auth::user()->name : 'Name' }}"/>
+                                    type="text" name="name" placeholder="Name"
+                                    value="{{ Auth::check() ? Auth::user()->name : 'Name' }}" />
                             </div>
                             <div class="grid grid-cols-1 mt-5 mx-7">
                                 <label class="uppercase md:text-sm text-xs text-black text-light font-semibold">Phone
@@ -34,7 +36,8 @@ $emId = request('emId');
                                     class="uppercase md:text-sm text-xs text-black text-light font-semibold">Email</label>
                                 <input
                                     class="py-2 px-3 rounded-lg border-2 border-orange-900 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                    type="email" name="email" placeholder="Email" value="{{ Auth::check() ? Auth::user()->email : 'Email' }}"/>
+                                    type="email" name="email" placeholder="Email"
+                                    value="{{ Auth::check() ? Auth::user()->email : 'Email' }}" />
                             </div>
                         </div>
 
@@ -47,8 +50,9 @@ $emId = request('emId');
                                     class="flex-1 py-2 border-b-2 border-orange-900
                                     focus:ring-purple-600 focus:border-transparent placeholder-gray-400 outline-none">
                                     <option value='1' class="py-2" selected>Select Time</option>
-                                    @foreach ($timeSlots as $time )
-                                    <option value='{{ $time->id }}' class="py-2">{{ $time->start_Time}} - {{ $time->end_Time}}</option>
+                                    @foreach ($timeSlots as $time)
+                                        <option value='{{ $time->id }}' class="py-2">{{ $time->start_Time }} -
+                                            {{ $time->end_Time }}</option>
                                     @endforeach
                                 </select>
                             </div>

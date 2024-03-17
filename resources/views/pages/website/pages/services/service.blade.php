@@ -5,7 +5,7 @@
                 <p class="text-center text-xl font-medium text-amber-500">Our Main Services</p>
             </div> --}}
             <div class="flex justify-center text-center pb-5">
-                <h1 class="text-center text-4xl font-bold text-amber-500">Our Services</h1>
+                <h1 class="text-center text-4xl font-bold text-amber-500">Main Services</h1>
             </div>
             {{-- <div class="flex justify-center text-center pb-5">
                 .......................................

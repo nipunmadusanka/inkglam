@@ -1,12 +1,37 @@
+@php
+    $storedData = session('stored_data');
+@endphp
 <div class="flex justify-center w-full h-full p-5 bg-[#343232] text-white">
     <div class="container flex items-center justify-center">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="justify-center grid-rows-2 top-0 p-3 md:order-1 order-2">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            @if ($storedData)
+                <div
+                    class="justify-center grid-rows-2 top-0 p-3 md:order-1 order-1 overflow-y-scroll bg-orange-300 rounded-sm">
+                    @foreach ($storedData as $id => $data)
+                        <div
+                            class="grid grid-cols-1 md:grid-cols-6 gap-2 bg-white text-black mb-4 py-4 p-4 rounded-md shadow-2xl border-2 border-black">
+                            <div class="col-span-5 flex-col space-y-2">
+                                <div class="flex">
+                                    <p class=" text-lg font-bold">{{ $data['name'] }}</p>
+
+                                </div>
+                                <p>Price: {{ $data['price'] }}</p>
+                            </div>
+                            <div class="flex justify-center col-span-1 items-center">
+                                <input type="text" hidden class="mysId" value={{ $id }}>
+                                <button type=""
+                                    class="view_service_btn bg-amber-500 rounded-md p-3 px-3 sm:px-4 dark:bg-opacity-60 hover:bg-opacity-90">View</button>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+            <div class="justify-center grid-rows-2 top-0 p-3 md:order-2 order-2">
                 <div class="flex justify-center items-center p-3 top-0">
                     <img class="h-full w-full m-2" src="{{ asset('images/' . $serviceData->image) }}" alt="">
                 </div>
             </div>
-            <div class="flex justify-center top-0 p-3 md:order-2 order-1">
+            <div class="flex justify-center top-0 p-3 md:order-3 order-3">
                 <div class="flex flex-col justify-start space-y-16 text-start p-3 top-0">
                     <div class="flex-col space-y-2">
                         <p class="font-serif font-bold text-2xl">{{ $serviceData->name }}
@@ -64,6 +89,16 @@
 
 <script>
     $(document).ready(function() {
+        $('.view_service_btn').click(function(e) {
+            // var deActiveId = $(this).siblings('.myId').val();
+            var sId = $(this).siblings('.mysId').val();
+            console.log(sId);
+            var url = `/appointment/${sId}`;
+            if (sId) {
+                window.location.href = url;
+            }
+
+        });
         $('.submit-btn').click(function(e) {
             e.preventDefault();
 

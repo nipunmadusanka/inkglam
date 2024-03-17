@@ -65,7 +65,7 @@
                             <button type=""
                                 class="clear_btn submit-btn bg-amber-400 rounded-md p-3 px-3 sm:px-8 w-32 text-black">Clear
                                 all</button>
-                            <button type=""
+                            <button type="" id="nextBtn"
                                 class="next_btn submit-btn bg-amber-400 rounded-md p-3 px-3 sm:px-8 w-32 text-black">Next</button>
                         </div>
                     </div>
@@ -78,7 +78,18 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    var firstId;
     $(document).ready(function() {
+        $('#nextBtn').click(function() {
+            // Construct the URL for redirection
+            var url = `/appointment/${firstId}`;
+            if (firstId) {
+                window.location.href = url;
+            } else {
+                $('#alertDiv').show();
+                $('#alertP').text("can't proceed, please add service");
+            }
+        });
         $('.addsubform').on('submit', function(event) {
             event.preventDefault(); // Prevent the default form submission
 
@@ -97,9 +108,14 @@
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
                 success: function(response) {
+
                     var storedData = response.formData;
                     // Get the keys of the storedData object
                     var keys = Object.keys(storedData);
+                    firstId = Object.keys(storedData)[0]; // This gets the first key/id
+
+                    // Now you have the first ID stored in firstId variable
+                    console.log("First ID:", firstId);
                     // Get the count of items
                     var itemCount = keys.length;
                     $('#numberitems').text(itemCount);
@@ -195,4 +211,3 @@
         });
     });
 </script>
-

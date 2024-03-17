@@ -39,6 +39,7 @@ Route::post('/letstalk', [HomeController::class, 'letStalk'])->name('letstalk');
 Route::get('/letstalkscontacts', [HomeController::class, 'letsTalksContacts'])->name('letstalkscontacts');
 Route::get('/employeeview/{id}', [HomeController::class, 'employeeView'])->name('employeeview');
 Route::get('/viewgallery', [HomeController::class, 'viewGallery'])->name('pages.viewgallery');
+Route::get('/viewproductcategory', [HomeController::class, 'viewProductCategory'])->name('viewproductcategory');
 
 Route::get('/alluseradmin', [HomeController::class, 'alluseradmin'])->name('alluseradmin');
 
