@@ -14,9 +14,8 @@
                 <div class="container">
                     <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-4">
 
-
-                            <a href=""
-                                class="bg-[#B2B2B2] rounded-lg">
+                        @foreach ($results as $result)
+                            <a href="" class="bg-[#B2B2B2] rounded-lg">
                                 <div x-data="{ loaded: false }" x-ref="content" x-init="() => {
                                     let observer = new IntersectionObserver((entries) => {
                                         entries.forEach(entry => {
@@ -32,79 +31,19 @@
                                     x-bind:class="{ 'opacity-100 translate-y-0': loaded }">
                                     <div class="items-center text-black grid grid-rows-2">
                                         <div class="flex justify-center">
-                                            <img src="{{ asset('jewellery.jpg') }}" alt="m"
+                                            <img src={{ asset('itemMainCat/' . $result->image) }} alt={{ $result->name }}
                                                 class="block h-48 w-full fill-current text-gray-800 object-cover dark:text-gray-200 focus:shadow-outline" />
                                         </div>
                                         <div class="space-y-2 p-3">
-                                            <h1 class="text-center text-4xl font-medium">Jewellery</h1>
+                                            <h1 class="text-center text-4xl font-medium">{{ $result->title }}</h1>
                                             <p class="text-center font-serif text-sm">
-                                                Enhance your elegance with our salon jewelry collection. Elevate your ensemble with timeless pieces.
+                                               {{$result->description}}
                                             </p>
                                         </div>
                                     </div>
                                 </div>
                             </a>
-
-                            <a href=""
-                                class="bg-[#B2B2B2] rounded-lg">
-                                <div x-data="{ loaded: false }" x-ref="content" x-init="() => {
-                                    let observer = new IntersectionObserver((entries) => {
-                                        entries.forEach(entry => {
-                                            if (entry.isIntersecting) {
-                                                loaded = true;
-                                                observer.disconnect(); // Disconnect the observer once the element is in view
-                                            }
-                                        });
-                                    });
-                                    observer.observe($refs.content);
-                                }"
-                                    class="flex justify-center py-3 p-3 overflow-hidden transition-all duration-500 ease-in-out transform opacity-0"
-                                    x-bind:class="{ 'opacity-100 translate-y-0': loaded }">
-                                    <div class="items-center text-black grid grid-rows-2">
-                                        <div class="flex justify-center">
-                                            <img src="{{ asset('costume.jpg') }}" alt="m"
-                                                class="block h-48 w-full fill-current text-gray-800 object-cover dark:text-gray-200 focus:shadow-outline" />
-                                        </div>
-                                        <div class="space-y-2 p-3">
-                                            <h1 class="text-center text-4xl font-medium">Costume</h1>
-                                            <p class="text-center font-serif text-sm">
-
-Level up your style effortlessly with our salon costumes. Experience elegance with every wear.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a href=""
-                                class="bg-[#B2B2B2] rounded-lg">
-                                <div x-data="{ loaded: false }" x-ref="content" x-init="() => {
-                                    let observer = new IntersectionObserver((entries) => {
-                                        entries.forEach(entry => {
-                                            if (entry.isIntersecting) {
-                                                loaded = true;
-                                                observer.disconnect(); // Disconnect the observer once the element is in view
-                                            }
-                                        });
-                                    });
-                                    observer.observe($refs.content);
-                                }"
-                                    class="flex justify-center py-3 p-3 overflow-hidden transition-all duration-500 ease-in-out transform opacity-0"
-                                    x-bind:class="{ 'opacity-100 translate-y-0': loaded }">
-                                    <div class="items-center text-black grid grid-rows-2">
-                                        <div class="flex justify-center">
-                                            <img src="{{ asset('products.jpg') }}" alt="m"
-                                                class="block h-48 w-full fill-current text-gray-800 object-cover dark:text-gray-200 focus:shadow-outline" />
-                                        </div>
-                                        <div class="space-y-2 p-3">
-                                            <h1 class="text-center text-4xl font-medium">Products</h1>
-                                            <p class="text-center font-serif text-sm">
-                                                Elevate your beauty game with salon-grade products. Shop now for professional results at home.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
+                        @endforeach
 
                     </div>
                 </div>

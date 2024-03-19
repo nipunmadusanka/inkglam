@@ -19,6 +19,10 @@
                 <i class="fas fa-store mr-2"></i>Appoinments
             </a>
             <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white"
+                href={{ Route('pages.viewMainItemCategory') }}>
+                <i class="fas fa-store mr-2"></i>Products
+            </a>
+            <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white"
                 href={{ Route('alluseradmin') }}>
                 <i class="fa fa-user mr-2"></i>Users
             </a>

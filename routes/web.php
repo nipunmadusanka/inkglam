@@ -9,6 +9,7 @@ use App\Http\Controllers\AppoinmentController;
 use App\Http\Controllers\AppoinmentCustomerController;
 use App\Http\Controllers\MainServiceController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\itemsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,6 +86,12 @@ Route::post('/addgalleryimage', [SettingsController::class, 'addGalleryImgage'])
 Route::post('/gallery/deactive', [SettingsController::class, 'deactiveGallery'])->name('gallery.deactive');
 Route::post('/gallery/active', [SettingsController::class, 'activeGallery'])->name('gallery.active');
 
+Route::get('/viewmainitemcategory', [itemsController::class, 'index'])->name('pages.viewMainItemCategory');
+Route::get('/addmainitemcategory', [itemsController::class, 'addMainItemCategory'])->name('pages.addMainItemCategory');
+Route::post('/addmaincat', [itemsController::class, 'addMainCatItems'])->name('addmaincatitems');
+Route::get('/viewitems/{id}', [itemsController::class, 'viewItems'])->name('pages.viewItems');
+Route::post('/mainitemdeactive', [itemsController::class, 'mainItemDeactive'])->name('mainitem.deactive');
+Route::post('/mainitemactive', [itemsController::class, 'activeMainItem'])->name('mainitem.active');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

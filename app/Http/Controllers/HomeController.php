@@ -14,6 +14,7 @@ use App\Models\Letstalk as LetstalkModel;
 use App\Models\Mainservice_has_Product as Has_ProductModel;
 use App\Models\Mainservice as MainServicesModel;
 use App\Models\Imagegallery as ImagegalleryModel;
+use App\Models\Maincatitems as MainItemsModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use PHPUnit\Metadata\Uses;
@@ -228,7 +229,8 @@ class HomeController extends Controller
     }
 
     public function viewProductCategory() {
-        return view('pages.website.pages.products.products');
+        $data = MainItemsModel::where('status', 1)->get();
+        return view('pages.website.pages.products.products', ['results' => $data]);
     }
 
     public function letsTalksContacts()
