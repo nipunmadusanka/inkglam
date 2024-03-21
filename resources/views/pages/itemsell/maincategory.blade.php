@@ -3,7 +3,7 @@
         <div class="p-4 flex flex-col">
             <div class="text-start mb-12">
                 <h1 class="text-start text-lg font-bold text-white">
-                    Main Services
+                     Main Category
                 </h1>
             </div>
 
@@ -11,7 +11,7 @@
                 <a href={{ Route('pages.addMainItemCategory') }}
                     class="middle none center mr-3 rounded-lg bg-sky-600 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-sky-500/20 transition-all hover:shadow-lg hover:shadow-sky-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                     data-ripple-light="true">
-                    Add Main Service
+                    Add Main Category
                 </a>
             </div>
             <div class="p-10">
@@ -69,7 +69,7 @@
                                         class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Actions</span>
 
                                     <div class="flex flex-row justify-center space-x-2">
-                                        <a href={{ Route('page.editservice', ['id' => $item->id]) }} class="">
+                                        <a href={{ Route('page.editmainitem', ['id' => $item->id]) }} class="">
                                             <button
                                                 class=" bg-sky-500 p-2 border-1 rounded-lg px-4 min-w-24">Edit</button>
                                         </a>

@@ -15,6 +15,7 @@ use App\Models\Mainservice_has_Product as Has_ProductModel;
 use App\Models\Mainservice as MainServicesModel;
 use App\Models\Imagegallery as ImagegalleryModel;
 use App\Models\Maincatitems as MainItemsModel;
+use App\Models\Sellitems as SellitemsModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use PHPUnit\Metadata\Uses;
@@ -83,6 +84,7 @@ class HomeController extends Controller
         //     ->where('status', 1)
         //     ->with('products') // Assuming 'product' is the correct relationship name
         //     ->get();
+        $time_data = TimeslotModel::all();
         $employeesWithServices = EmployeeHasServices::where('sId', $id)
             ->where('employee_has_services.status', 1) // Add this condition for status
             ->join('products', 'employee_has_services.sId', '=', 'products.id')
@@ -96,6 +98,7 @@ class HomeController extends Controller
             'countRatings' => $countRatings,
             'starCounts' => $starCounts,
             'employeesWithServices' => $employeesWithServices,
+            'timeSlots' => $time_data
         ]);
     }
 
@@ -146,7 +149,7 @@ class HomeController extends Controller
     }
     public function placeAppoinment(Request $request)
     {
-        // dd($request);
+        dd($request);
         $request->validate([
             'sId' => 'required',
             'emId' => 'required',
@@ -161,7 +164,7 @@ class HomeController extends Controller
         $status = 0;
         NewAppoinmentsModel::create([
             'uId' => $uId,
-            'eId' => $request->emId,
+            'eId' => 2,
             'sId' => $request->sId,
             'tId' => $request->time,
             'name' => $request->name,
@@ -204,13 +207,13 @@ class HomeController extends Controller
 
     public function addsubservice(Request $request)
     {
-        // Session::forget('stored_data');
-
         $id = $request->subId;
         $formData = [
             'subId' => $request->subId,
             'name' => $request->name,
             'price' => $request->price,
+            'emId' => 0,
+            'tId' => 0,
         ];
 
         $storedData = Session::get('stored_data', []);
@@ -223,12 +226,55 @@ class HomeController extends Controller
         return response()->json(['formData' => $storedData]);
     }
 
-    public function clearAllServices() {
+    public function clearAllServices()
+    {
         Session::forget('stored_data');
         return redirect()->back();
     }
 
-    public function viewProductCategory() {
+    public function deleteSelectedService(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        $id = $data['deActiveId'];
+        $storedData = Session::get('stored_data', []);
+        if (isset($storedData[$id])) {
+            unset($storedData[$id]);
+            Session::put('stored_data', $storedData);
+        }
+        return redirect()->back()->with('success', 'Successfully deactivated');
+    }
+
+    public function addEmToService(Request $request) {
+        $data = json_decode($request->getContent(), true);
+        $id = $data['sId'];
+        $selectedEmId = $data['selectedEmId'];
+        $storedData = Session::get('stored_data', []);
+        if (isset($storedData[$id])) {
+            $storedData[$id]['emId'] = $selectedEmId;
+            Session::put('stored_data', $storedData);
+        }
+        return $storedData;
+    }
+
+    public function addTimetoService(Request $request) {
+        $data = json_decode($request->getContent(), true);
+        $id = $data['sId'];
+        $selectedTimeId = $data['tId'];
+        $storedData = Session::get('stored_data', []);
+        if (isset($storedData[$id])) {
+            $storedData[$id]['tId'] = $selectedTimeId;
+            Session::put('stored_data', $storedData);
+        }
+        return $storedData;
+    }
+
+    public function viewProducts($id) {
+        $data = SellitemsModel::where('mcatId', $id)->where('status', '1')->get();
+        return view('pages.website.pages.products.items.items', ['results' => $data]);
+    }
+
+    public function viewProductCategory()
+    {
         $data = MainItemsModel::where('status', 1)->get();
         return view('pages.website.pages.products.products', ['results' => $data]);
     }

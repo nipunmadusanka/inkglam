@@ -9,18 +9,40 @@
                     class="justify-center grid-rows-2 top-0 p-3 md:order-1 order-1 overflow-y-scroll bg-orange-300 rounded-sm">
                     @foreach ($storedData as $id => $data)
                         <div
-                            class="grid grid-cols-1 md:grid-cols-6 gap-2 bg-white text-black mb-4 py-4 p-4 rounded-md shadow-2xl border-2 border-black">
-                            <div class="col-span-5 flex-col space-y-2">
+                            class="grid grid-cols-1 overflow-hidden md:grid-cols-6 gap-2 bg-white text-black mb-4 py-4 p-4 rounded-md shadow-2xl border-2 border-black">
+                            <div class="col-span-3 flex-col space-y-2">
                                 <div class="flex">
                                     <p class=" text-lg font-bold">{{ $data['name'] }}</p>
-
                                 </div>
                                 <p>Price: {{ $data['price'] }}</p>
+                                <hr />
+                                @if ($data['emId'] > 0)
+                                    @foreach ($employeesWithServices as $employee)
+                                        @if ($employee->id == $data['emId'])
+                                            <p>Beautician: {{ $employee->fname }}</p>
+                                        @endif
+                                    @endforeach
+                                @else
+                                    <p class=" text-red-500 text-sm font-serif font-thin">Please select beautician</p>
+                                @endif
+
+                                @if ($data['tId'] > 0)
+                                    @foreach ($timeSlots as $time)
+                                        @if ($time->id == $data['tId'])
+                                            <p>Time: {{ $time->start_Time }} - {{ $time->end_Time }}</p>
+                                        @endif
+                                    @endforeach
+                                @else
+                                    <p class=" text-red-500 text-sm font-serif font-thin">Please select time-slot</p>
+                                @endif
                             </div>
-                            <div class="flex justify-center col-span-1 items-center">
+                            <div class="flex justify-center space-x-1 col-span-3 items-center">
                                 <input type="text" hidden class="mysId" value={{ $id }}>
                                 <button type=""
+                                    class="delete_service_btn bg-red-500 rounded-md p-3 px-3 sm:px-4 dark:bg-opacity-60 hover:bg-opacity-90">Delete</button>
+                                <button type=""
                                     class="view_service_btn bg-amber-500 rounded-md p-3 px-3 sm:px-4 dark:bg-opacity-60 hover:bg-opacity-90">View</button>
+
                             </div>
                         </div>
                     @endforeach
@@ -47,26 +69,38 @@
                                 method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="space-y-2">
-                                    <div class="grid grid-cols-2 gap-30">
-                                        <div class="flex items-start mb-5">
+                                    <div class="flex flex-col space-y-4 mb-7">
+                                        <div class="grid items-start grid-cols-3 gap-2">
                                             <label for="number"
-                                                class="inline-block w-20 text-start font-bold text-gray-600">Select
-                                                Employee</label>
+                                                class="col-span-1 inline-block text-start font-bold pr-5">Select
+                                                Beautician</label>
                                             <select id="locationSelect" name="employeId"
-                                                class="flex-1 py-2 border-b-2 border-gray-400
+                                                class="col-span-2 flex-1 py-2 border-b-2 border-gray-400
                                                 focus:border-green-400 text-gray-600 placeholder-gray-400 outline-none">
+                                                <option class="emId">
+                                                    Select</option>
                                                 @foreach ($employeesWithServices as $employee)
                                                     <option value={{ $employee->id }} class="emId">
                                                         {{ $employee->fname }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
-                                        {{-- <div class="grid grid-cols-1 mt-5 mx-7">
-                                            <label class="uppercase md:text-sm text-xs text-white text-light font-semibold">price</label>
-                                            <input
-                                                class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                                type="text" name="price" id="priceid" placeholder="price" />
-                                        </div> --}}
+                                        <div class="grid items-start grid-cols-3 gap-2">
+                                            <label for="number"
+                                                class="col-span-1 inline-block text-start font-bold pr-5">Select
+                                                Time Slot</label>
+                                            <select id="timeSelect" name="timeId"
+                                                class="col-span-2 flex-1 py-2 border-b-2 border-gray-400
+                                                focus:border-green-400 text-gray-600 placeholder-gray-400 outline-none">
+                                                <option class="emId">
+                                                    Select</option>
+                                                @foreach ($timeSlots as $time)
+                                                    <option value='{{ $time->id }}' class="emId">
+                                                        {{ $time->start_Time }} - {{ $time->end_Time }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
                                     <button type="submit"
                                         class="submit-btn bg-orange-900 p-3 px-4 dark:bg-opacity-60 text-white hover:bg-opacity-90">Make
@@ -89,7 +123,9 @@
 
 <script>
     $(document).ready(function() {
+
         $('.view_service_btn').click(function(e) {
+            e.preventDefault();
             // var deActiveId = $(this).siblings('.myId').val();
             var sId = $(this).siblings('.mysId').val();
             console.log(sId);
@@ -97,11 +133,95 @@
             if (sId) {
                 window.location.href = url;
             }
-
         });
+
+        $('.delete_service_btn').click(function(e) {
+            var sId = $(this).siblings('.mysId').val();
+            console.log("nowSid");
+            if (sId) {
+                $.ajax({
+                    url: '{{ route('deleteselectservice') }}',
+                    type: "POST",
+                    data: JSON.stringify({
+                        deActiveId: sId,
+                    }),
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        window.location.reload();
+                    },
+                    error: function(error) {
+                        console.log(error.responseText);
+                    }
+                })
+            }
+        });
+
+        $('#locationSelect').change(function() {
+            var selectedValue = $(this).val();
+            console.log(selectedValue);
+            var currentUrl = window.location.href;
+            var id = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
+            console.log(id);
+            if (selectedValue) {
+                $.ajax({
+                    url: '{{ route('addemtoservice') }}',
+                    type: "POST",
+                    data: JSON.stringify({
+                        sId: id,
+                        selectedEmId: selectedValue,
+                    }),
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        // console.log(response);
+                        window.location.reload();
+                    },
+                    error: function(error) {
+                        console.log(error.responseText);
+                    }
+                })
+            }
+        });
+
+        $('#timeSelect').change(function() {
+            var timeId = $(this).val();
+            console.log(timeId);
+            var currentUrl = window.location.href;
+            var id = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
+            console.log(id);
+            if (timeId) {
+                $.ajax({
+                    url: '{{ route('addtimetoservice') }}',
+                    type: "POST",
+                    data: JSON.stringify({
+                        sId: id,
+                        tId: timeId,
+                    }),
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        // console.log(response);
+                        window.location.reload();
+                    },
+                    error: function(error) {
+                        console.log(error.responseText);
+                    }
+                })
+            }
+        });
+
         $('.submit-btn').click(function(e) {
             e.preventDefault();
-
             var formData = new FormData($('#appointmentForm')[0]);
             console.log(formData);
             $.ajax({

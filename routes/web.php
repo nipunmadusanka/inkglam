@@ -32,6 +32,9 @@ Route::get('/appointment/{id}', [HomeController::class, 'appointment'])->name('s
 Route::get('/subservice/{id}', [HomeController::class, 'subService'])->name('service.subservice');
 Route::post('/addsubservice', [HomeController::class, 'addSubService'])->name('addsubservice');
 Route::post('/clearallservices', [HomeController::class, 'clearAllServices'])->name('clearallservices');
+Route::post('/deleteselectservice', [HomeController::class, 'deleteSelectedService'])->name('deleteselectservice');
+Route::post('/addemtoservice', [HomeController::class, 'addEmToService'])->name('addemtoservice');
+Route::post('/addtimetoservice', [HomeController::class, 'addTimetoService'])->name('addtimetoservice');
 Route::post('/makeappointment/{id}', [HomeController::class, 'makeAppointment'])->name('makeappointment');
 Route::post('/postratings/{id}', [HomeController::class, 'postRatings'])->name('postratings');
 Route::get('/placeappoinmentview', [HomeController::class, 'placeAppoinmentView'])->name('placeappoinmentview');
@@ -41,6 +44,7 @@ Route::get('/letstalkscontacts', [HomeController::class, 'letsTalksContacts'])->
 Route::get('/employeeview/{id}', [HomeController::class, 'employeeView'])->name('employeeview');
 Route::get('/viewgallery', [HomeController::class, 'viewGallery'])->name('pages.viewgallery');
 Route::get('/viewproductcategory', [HomeController::class, 'viewProductCategory'])->name('viewproductcategory');
+Route::get('/viewproducts/{id}', [HomeController::class, 'viewProducts'])->name('page.viewproducts');
 
 Route::get('/alluseradmin', [HomeController::class, 'alluseradmin'])->name('alluseradmin');
 
@@ -92,6 +96,16 @@ Route::post('/addmaincat', [itemsController::class, 'addMainCatItems'])->name('a
 Route::get('/viewitems/{id}', [itemsController::class, 'viewItems'])->name('pages.viewItems');
 Route::post('/mainitemdeactive', [itemsController::class, 'mainItemDeactive'])->name('mainitem.deactive');
 Route::post('/mainitemactive', [itemsController::class, 'activeMainItem'])->name('mainitem.active');
+Route::get('/editmainitem/{id}', [itemsController::class, 'editMainItem'])->name('page.editmainitem');
+Route::post('/updatemainitem/{id}', [itemsController::class, 'updateMainItem'])->name('updatemainitem');
+
+Route::get('/addnewitems/{id}', [itemsController::class, 'addnewItems'])->name('page.addnewitems');
+Route::post('/additems', [itemsController::class, 'addItems'])->name('additems');
+Route::get('/edititems/{id}', [itemsController::class, 'editItems'])->name('page.edititems');
+Route::post('/updateitems/{id}', [itemsController::class, 'updateItems'])->name('updateitems');
+Route::post('/deactiveitems', [itemsController::class, 'deactiveItems'])->name('deactiveItems');
+Route::post('/activeitems', [itemsController::class, 'activeItems'])->name('activeItems');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

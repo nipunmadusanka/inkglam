@@ -36,7 +36,7 @@
                 </div>
             </div>
         </div>
-mmm
+        @include('pages.sellitems.sellitems');
     @endif
 </x-app-layout>
 
