@@ -12,39 +12,56 @@
             </div> --}}
             <div class="flex justify-center items-center">
                 <div class="container">
-                    <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-2">
-
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         @foreach ($results as $result)
-                            <a href="" class="bg-[#B2B2B2] rounded-lg">
-                                <div x-data="{ loaded: false }" x-ref="content" x-init="() => {
-                                    let observer = new IntersectionObserver((entries) => {
-                                        entries.forEach(entry => {
-                                            if (entry.isIntersecting) {
-                                                loaded = true;
-                                                observer.disconnect(); // Disconnect the observer once the element is in view
-                                            }
-                                        });
-                                    });
-                                    observer.observe($refs.content);
-                                }"
-                                    class="flex justify-center py-3 p-3 overflow-hidden transition-all duration-500 ease-in-out transform opacity-0"
-                                    x-bind:class="{ 'opacity-100 translate-y-0': loaded }">
-                                    <div class="items-center text-black grid grid-rows-2">
-                                        <div class="flex justify-center">
-                                            <img src={{ asset('sellitems/' . $result->image) }} alt={{ $result->title }}
-                                                class="block h-48 w-auto fill-current text-gray-800 object-cover dark:text-gray-200 focus:shadow-outline" />
+                            <!-- component -->
+                            <div
+                                class="mx-auto mt-11 w-40 sm:w-48 lg:w-72 transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 shadow-md hover:shadow">
+                                <a href={{ Route('page.oneitemview', ['id' => $result->id]) }} class="">
+                                    <img class="h-48 w-full object-cover object-center"
+                                        src={{ asset('sellitems/' . $result->image) }} alt={{ $result->item }} />
+                                </a>
+                                <div class="p-4">
+                                    <a href={{ Route('page.oneitemview', ['id' => $result->id]) }}
+                                        class=" hover:underline">
+                                        <h2 class="mb-2 text-lg font-medium dark:text-white text-gray-900">
+                                            {{ $result->item }}</h2>
+                                        <p class="mb-2 text-base dark:text-gray-300 text-gray-700 no-underline">
+                                            {{ Illuminate\Support\Str::limit($result->description, 30) }}
+                                        </p>
+                                    </a>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 items-center justify-between bottom-0">
+                                        <span
+                                            class="text-3xl font-bold text-gray-900 dark:text-white">Rs. {{ $result->price }}</span>
+
+                                        <div class="flex justify-end">
+                                            <a href={{Route('addcart', ['id' => $result->id])}}
+                                                class="flex justify-center items-center text-white bg-amber-400 hover:bg-amber-800 focus:ring-4 focus:ring-amber-300 font-medium rounded-lg text-sm w-16 px-2 py-2 lg:px-5 lg:py-2.5 text-center dark:bg-amber-600 dark:amber:bg-blue-700 dark:focus:ring-amber-800">
+                                                {{-- Add to cart --}}
+                                                <svg class="h-5 w-5" fill="none" stroke-linecap="round"
+                                                    stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"
+                                                    stroke="currentColor">
+                                                    <path
+                                                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
+                                                    </path>
+                                                </svg>
+                                            </a>
                                         </div>
-                                        <div class="space-y-2 p-3">
-                                            <h1 class="text-center text-4xl font-medium">{{ $result->title }}</h1>
-                                            <p class="text-center font-serif text-sm">
-                                               {{$result->description}}
-                                            </p>
-                                        </div>
+
+                                        {{-- <button
+                                            class="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
+                                            <svg class="h-5 w-5" fill="none" stroke-linecap="round"
+                                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"
+                                                stroke="currentColor">
+                                                <path
+                                                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
+                                                </path>
+                                            </svg>
+                                        </button> --}}
                                     </div>
                                 </div>
-                            </a>
+                            </div>
                         @endforeach
-
                     </div>
                 </div>
             </div>

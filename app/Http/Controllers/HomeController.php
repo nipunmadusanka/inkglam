@@ -244,7 +244,8 @@ class HomeController extends Controller
         return redirect()->back()->with('success', 'Successfully deactivated');
     }
 
-    public function addEmToService(Request $request) {
+    public function addEmToService(Request $request)
+    {
         $data = json_decode($request->getContent(), true);
         $id = $data['sId'];
         $selectedEmId = $data['selectedEmId'];
@@ -256,7 +257,8 @@ class HomeController extends Controller
         return $storedData;
     }
 
-    public function addTimetoService(Request $request) {
+    public function addTimetoService(Request $request)
+    {
         $data = json_decode($request->getContent(), true);
         $id = $data['sId'];
         $selectedTimeId = $data['tId'];
@@ -268,15 +270,63 @@ class HomeController extends Controller
         return $storedData;
     }
 
-    public function viewProducts($id) {
-        $data = SellitemsModel::where('mcatId', $id)->where('status', '1')->get();
-        return view('pages.website.pages.products.items.items', ['results' => $data]);
-    }
-
     public function viewProductCategory()
     {
         $data = MainItemsModel::where('status', 1)->get();
         return view('pages.website.pages.products.products', ['results' => $data]);
+    }
+
+    public function viewProducts($id)
+    {
+        $data = SellitemsModel::where('mcatId', $id)
+            ->where('status', '1')
+            ->where('qty', '>', 0)
+            ->get();
+        return view('pages.website.pages.products.items.items', ['results' => $data]);
+    }
+
+    public function oneItemView($id)
+    {
+        $data = SellitemsModel::where('id', $id)->where('status', '1')->first();
+        $allitems = SellitemsModel::where('status', '1')
+            ->where('qty', '>', 0)
+            ->get();
+        return view('pages.website.pages.products.items.oneitem', ['result' => $data, 'allitems' => $allitems]);
+    }
+
+    public function viewCart()
+    {
+        return view('pages.website.pages.products.items.cart');
+    }
+
+    public function addCart($id)
+    {
+        $data = SellitemsModel::find($id);
+        $cart = Session::get('cart', []);
+
+        if (isset($cart[$id])) {
+            $cart[$id]['quantity']++;
+        } else {
+            $cart[$id] = [
+                'name' => $data->item,
+                'quantity' => 1,
+                'price' => $data->price,
+                'image' => $data->image
+            ];
+        }
+        Session::put('cart', $cart);
+        return redirect()->back()->with('success', 'Successfully added to cart');
+    }
+
+    public function deleteCart(Request $request) {
+        $data = json_decode($request->getContent(), true);
+        $id = $data['deleteId'];
+        $storedData = Session::get('cart', []);
+        if (isset($storedData[$id])) {
+            unset($storedData[$id]);
+            Session::put('cart', $storedData);
+        }
+        return redirect()->back()->with('success', 'Successfully delete');
     }
 
     public function letsTalksContacts()
