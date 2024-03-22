@@ -24,19 +24,22 @@
                             }"
                                 class="flex justify-center bg-gray-200 overflow-hidden transition-all duration-500 ease-in-out transform opacity-0 "
                                 x-bind:class="{ 'opacity-100 translate-y-0': loaded }">
-
-                                <div
-                                    class="group items-center flex justify-center relative hover:bg-[#0D0F1C]/80 ease-in-out transition hover:scale-110">
-                                    <img src="{{ asset('employeePhotos/' . $result->image) }}" alt="logo"
-                                        class="block h-full w-full fill-current text-gray-800 dark:text-gray-200 focus:shadow-outline group-hover:opacity-25" />
-
-                                    <!-- Text hidden by default, shown on group hover -->
+                                <a href="{{ Route('pages.viewemployeprofile', ['id' => $result->id]) }}">
                                     <div
-                                        class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 container items-center">
-                                        <p class="text-center text-white text-lg font-bold">{{ $result->fname . ' ' . $result->lname }}</p>
-                                        <p class="text-center text-base font-serif font-medium">{{ $result->position }}</p>
+                                        class="group items-center flex justify-center relative hover:bg-[#0D0F1C]/80 ease-in-out transition hover:scale-110">
+                                        <img src="{{ asset('employeePhotos/' . $result->image) }}" alt="logo"
+                                            class="block h-full w-full fill-current text-gray-800 dark:text-gray-200 focus:shadow-outline group-hover:opacity-25" />
+
+                                        <!-- Text hidden by default, shown on group hover -->
+                                        <div
+                                            class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 container items-center">
+                                            <p class="text-center text-white text-lg font-bold">
+                                                {{ $result->fname . ' ' . $result->lname }}</p>
+                                            <p class="text-center text-base font-serif font-medium">
+                                                {{ $result->position }}</p>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                         @endforeach
                     </div>

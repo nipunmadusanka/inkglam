@@ -329,6 +329,12 @@ class HomeController extends Controller
         return redirect()->back()->with('success', 'Successfully delete');
     }
 
+    public function viewEmployeProfile($id) {
+        $data = EmployeeModel::where('id', $id)->first();
+// dd($data);
+        return view('pages.website.pages.employee.employee', ['results' => $data]);
+    }
+
     public function letsTalksContacts()
     {
         if (Auth::check()) {

@@ -49,6 +49,7 @@ Route::get('/oneitemview/{id}', [HomeController::class, 'oneItemView'])->name('p
 Route::get('/viewcart', [HomeController::class, 'viewCart'])->name('pages.viewcart');
 Route::get('/addcart/{id}', [HomeController::class, 'addCart'])->name('addcart');
 Route::post('/deletecart', [HomeController::class, 'deleteCart'])->name('deleteCart');
+Route::get('/viewemployeprofile/{id}', [HomeController::class, 'viewEmployeProfile'])->name('pages.viewemployeprofile');
 
 Route::get('/alluseradmin', [HomeController::class, 'alluseradmin'])->name('alluseradmin');
 

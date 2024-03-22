@@ -38,6 +38,7 @@
                             }"
                                 class="flex justify-center bg-[#B2B2B2] py-2 p-4 overflow-hidden transition-all duration-500 ease-in-out transform opacity-0"
                                 x-bind:class="{ 'opacity-100 translate-y-0': loaded }">
+                                <a href={{ Route('ourservices') }}>
                                 <div class="items-center flex flex-col justify-center space-y-5">
                                     <img src="{{ asset('mainservice/' . $result->image) }}" alt="logo"
                                         class="block p-5 h-2/4 w-auto fill-current text-gray-800 dark:text-gray-200 focus:shadow-outline shadow-lg " />
@@ -46,6 +47,7 @@
                                         {{ implode(' ', array_slice(str_word_count(strip_tags($result->description), 1), 0, 15)) }}
                                     </p>
                                 </div>
+                                </a>
                             </div>
                         @endforeach
                     </div>

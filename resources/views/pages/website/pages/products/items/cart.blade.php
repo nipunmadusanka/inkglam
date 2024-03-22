@@ -14,7 +14,9 @@
 
     <body>
         <div class="h-auto bg-[#343232] pt-20">
-            <h1 class="mb-10 text-center text-amber-500 text-2xl font-bold">Cart Items</h1>
+            <div class="flex justify-center text-center pb-5">
+                <h1 class="text-center text-4xl font-bold text-amber-500">Cart Items</h1>
+            </div>
             <div class=" mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
                 <div class="rounded-lg md:w-2/3">
                     @if (session('cart'))
@@ -85,7 +87,7 @@
 @endsection
 
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-        crossorigin="anonymous"></script>
+    crossorigin="anonymous"></script>
 
 <script>
     $(document).ready(function() {
