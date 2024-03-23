@@ -13,7 +13,7 @@
     </style>
 
     <body>
-        <div class="h-auto bg-[#343232] pt-20">
+        <div class="h-auto bg-[#343232] pt-20 pb-10">
             <div class="flex justify-center text-center pb-5">
                 <h1 class="text-center text-4xl font-bold text-amber-500">Cart Items</h1>
             </div>
@@ -28,19 +28,29 @@
                                     <div class="mt-5 sm:mt-0">
                                         <h2 class="text-lg font-bold text-gray-900">{{ $details['name'] }}</h2>
                                         <p class="mt-1 text-xs text-gray-700">{{ $details['name'] }}</p>
+                                        {{ $details['quantity'] }}
                                     </div>
                                     <div class="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
                                         <div class="flex items-center border-gray-100">
-                                            <span
-                                                class="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50">
-                                                - </span>
+                                            <div>
+                                                <a href={{ Route('reducecart', ['id' => $id]) }}>
+                                                    <span
+                                                        class="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50">
+                                                        - </span>
+                                                </a>
+                                            </div>
+
                                             <div
                                                 class="h-8 w-8 border bg-white flex justify-center items-center text-center text-xs outline-none">
                                                 <p>{{ $details['quantity'] }}</p>
                                             </div>
-                                            <span
-                                                class="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50">
-                                                + </span>
+                                            <div>
+                                                <a href={{ Route('addcart', ['id' => $id]) }}>
+                                                    <span
+                                                        class="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50">
+                                                        + </span>
+                                                </a>
+                                            </div>
                                         </div>
                                         <div class="flex items-center space-x-4">
                                             <p class="text-sm">Rs. {{ $details['price'] }}</p>
@@ -62,23 +72,26 @@
                 <div class="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
                     <div class="mb-2 flex justify-between">
                         <p class="text-gray-700">Subtotal</p>
-                        <p class="text-gray-700">Rs. 129.99</p>
+                        <p class="text-gray-700">Rs. {{ session('subtotal', 0) - 270 }}
+                        </p>
                     </div>
                     <div class="flex justify-between">
                         <p class="text-gray-700">Shipping</p>
-                        <p class="text-gray-700">Rs. 4.99</p>
+                        <p class="text-gray-700">Rs. 250</p>
                     </div>
                     <hr class="my-4" />
                     <div class="flex justify-between">
                         <p class="text-lg font-bold">Total</p>
                         <div class="">
-                            <p class="mb-1 text-lg font-bold">Rs. 134.98</p>
+                            <p class="mb-1 text-lg font-bold">Rs. {{ session('subtotal') }}</p>
                             <p class="text-sm text-gray-700">including VAT</p>
                         </div>
                     </div>
-                    <button
-                        class="mt-6 w-full rounded-md bg-amber-500 py-1.5 font-medium text-blue-50 hover:bg-amber-600">Check
-                        out</button>
+                    <a href="{{ Route('pages.viewpayment') }}">
+                        <button
+                            class="mt-6 w-full rounded-md bg-amber-500 py-1.5 font-medium text-blue-50 hover:bg-amber-600">Check
+                            out</button>
+                    </a>
                 </div>
             </div>
         </div>

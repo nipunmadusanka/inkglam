@@ -149,7 +149,6 @@ class HomeController extends Controller
     }
     public function placeAppoinment(Request $request)
     {
-        dd($request);
         $request->validate([
             'sId' => 'required',
             'emId' => 'required',
@@ -296,42 +295,92 @@ class HomeController extends Controller
 
     public function viewCart()
     {
-        return view('pages.website.pages.products.items.cart');
+        $cart = Session::get('cart', []);
+
+        if ($cart) {
+            return view('pages.website.pages.products.items.cart');
+        } else {
+            return redirect('/viewproductcategory')->with('success', 'Please add items to your cart');
+        }
     }
 
     public function addCart($id)
     {
+        $vat = 20;
+        $subtotal = 250 + $vat;
         $data = SellitemsModel::find($id);
         $cart = Session::get('cart', []);
+        $total = Session::get('subtotal', []);
 
         if (isset($cart[$id])) {
-            $cart[$id]['quantity']++;
+            if ($data->qty > $cart[$id]['quantity']) {
+                $cart[$id]['quantity']++;
+            } else {
+                return redirect()->back()->with('success', 'Stock over');
+            }
         } else {
             $cart[$id] = [
                 'name' => $data->item,
                 'quantity' => 1,
                 'price' => $data->price,
-                'image' => $data->image
+                'image' => $data->image,
+                'brand' => $data->brand,
+                'catId' => $data->mcatId,
+                'id' => $data->id,
             ];
         }
+
+        foreach ($cart as $item) {
+            $subtotal += $item['quantity'] * $item['price'];
+        }
+        Session::put('subtotal', $subtotal);
         Session::put('cart', $cart);
+
         return redirect()->back()->with('success', 'Successfully added to cart');
     }
 
-    public function deleteCart(Request $request) {
+    public function reduceCart($id)
+    {
+        $vat = 20;
+        $subtotal = 250 + $vat;
+        $data = SellitemsModel::find($id);
+        $cart = Session::get('cart', []);
+        $total = Session::get('subtotal', []);
+        if (isset($cart[$id])) {
+            if ($cart[$id]['quantity'] > 1) {
+                $cart[$id]['quantity']--;
+            }
+        }
+        foreach ($cart as $item) {
+            $subtotal += $item['quantity'] * $item['price'];
+        }
+        Session::put('subtotal', $subtotal);
+        Session::put('cart', $cart);
+        return redirect()->back()->with('success', 'Successfully');
+    }
+
+    public function deleteCart(Request $request)
+    {
+        $reducetotal = 0;
+        $subtotal = Session::get('subtotal', []);
+        $newSubTotal = 0;
         $data = json_decode($request->getContent(), true);
         $id = $data['deleteId'];
         $storedData = Session::get('cart', []);
         if (isset($storedData[$id])) {
+            $reducetotal = $storedData[$id]['quantity'] * $storedData[$id]['price'];
             unset($storedData[$id]);
             Session::put('cart', $storedData);
         }
+        $newSubTotal = $subtotal - $reducetotal;
+        Session::put('subtotal', $newSubTotal);
         return redirect()->back()->with('success', 'Successfully delete');
     }
 
-    public function viewEmployeProfile($id) {
+    public function viewEmployeProfile($id)
+    {
         $data = EmployeeModel::where('id', $id)->first();
-// dd($data);
+        // dd($data);
         return view('pages.website.pages.employee.employee', ['results' => $data]);
     }
 

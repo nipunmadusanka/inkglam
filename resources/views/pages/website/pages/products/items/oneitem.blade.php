@@ -102,8 +102,9 @@
                     </div>
                     <div class="flex">
                         <span class="title-font font-medium text-2xl ">Rs. {{ $result->price }}</span>
+                        <input type="hidden" hidden class="myId" value="{{ $result->id }}">
                         <button
-                            class="flex ml-auto text-white bg-amber-500 border-0 py-2 px-6 focus:outline-none hover:bg-amber-600 rounded">Button</button>
+                            class="flex ml-auto text-white bg-amber-500 border-0 py-2 px-6 focus:outline-none hover:bg-amber-600 rounded buyit">Buy</button>
                         <button
                             class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
                             <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -134,7 +135,7 @@
                                     <h3 class="text-black uppercase">{{ $result->item }}</h3>
                                     <span class="text-black mt-2">Rs. {{ $result->price }}</span>
                                     <div class="flex justify-end">
-                                        <a href={{Route('addcart', ['id' => $result->id])}}
+                                        <a href={{ Route('addcart', ['id' => $result->id]) }}
                                             class="flex justify-center items-center text-white bg-amber-400 hover:bg-amber-800 focus:ring-4 focus:ring-amber-300 font-medium rounded-lg text-sm w-16 px-2 py-2 lg:px-5 lg:py-2.5 text-center dark:bg-amber-600 dark:amber:bg-blue-700 dark:focus:ring-amber-800">
                                             {{-- Add to cart --}}
                                             <svg class="h-5 w-5" fill="none" stroke-linecap="round"
@@ -156,3 +157,36 @@
 
     </section>
 @endsection
+
+
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
+
+<script>
+    $(document).ready(function() {
+        $('.buyit').click(function(e) {
+            e.preventDefault();
+            var itemId = $(this).siblings('.myId').val();
+            console.log(itemId);
+            if (itemId) {
+                $.ajax({
+                    url: '/addcart/' + itemId,
+                    type: 'get',
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        window.location.href = '/viewcart';
+                    },
+                    error: function(error) {
+                        var response = JSON.parse(error.responseText);
+                    }
+                });
+            } else {
+                console.log('Please Click Deactive Button, If You Want to Deactive this Service');
+            }
+        });
+    });
+</script>

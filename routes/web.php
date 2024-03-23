@@ -10,6 +10,7 @@ use App\Http\Controllers\AppoinmentCustomerController;
 use App\Http\Controllers\MainServiceController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\itemsController;
+use App\Http\Controllers\ItemsBuyingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,8 +49,14 @@ Route::get('/viewproducts/{id}', [HomeController::class, 'viewProducts'])->name(
 Route::get('/oneitemview/{id}', [HomeController::class, 'oneItemView'])->name('page.oneitemview');
 Route::get('/viewcart', [HomeController::class, 'viewCart'])->name('pages.viewcart');
 Route::get('/addcart/{id}', [HomeController::class, 'addCart'])->name('addcart');
+Route::get('/reducecart/{id}', [HomeController::class, 'reduceCart'])->name('reducecart');
 Route::post('/deletecart', [HomeController::class, 'deleteCart'])->name('deleteCart');
 Route::get('/viewemployeprofile/{id}', [HomeController::class, 'viewEmployeProfile'])->name('pages.viewemployeprofile');
+
+Route::get('/viewpayment', [ItemsBuyingController::class, 'viewPayment'])->name('pages.viewpayment');
+Route::post('/payment', [ItemsBuyingController::class, 'payment'])->name('payment');
+Route::get('/viewconfirmpaymentotp', [ItemsBuyingController::class, 'viewConfirmPaymentOTP'])->name('pages.viewconfirmpayment');
+Route::post('/paymentotp', [ItemsBuyingController::class, 'paymentOTP'])->name('paymentotp');
 
 Route::get('/alluseradmin', [HomeController::class, 'alluseradmin'])->name('alluseradmin');
 
