@@ -34,10 +34,21 @@
                 href={{ Route('pages.viewsettings') }}>
                 <i class="fa fa-cog mr-2"></i>Settings
             </a>
-        @elseif (Auth::user()->user_type == 2)
+        @endif
+        @if (Auth::user()->user_type == 2 || Auth::user()->user_type == 1 || Auth::user()->user_type == 0)
+            <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white"
+                href={{ route('viewmyChat', ['id' => 1]) }}>
+                <i class="fas fa-store mr-2"></i>MyChat
+            </a>
+        @endif
+        @if (Auth::user()->user_type == 2)
             <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white"
                 href={{ Route('appoinmentcustomer') }}>
                 <i class="fas fa-store mr-2"></i>Appoinments
+            </a>
+            <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white"
+                href={{ Route('page.userorder', ['id' => Auth::user()->id]) }}>
+                <i class="fas fa-store mr-2"></i>My Orders
             </a>
         @endif
     </nav>

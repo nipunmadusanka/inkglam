@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Mail;
 use App\Mail\PaymentOTP;
+use App\Mail\OrderInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -10,7 +12,8 @@ use App\Models\Paymentinfo as PaymentInfoModel;
 use App\Models\Selluserinfo as SelluserInfoModel;
 use App\Models\Orders as OrderModel;
 use App\Models\Sellproductinfo as SellproductInfoModel;
-use Illuminate\Support\Facades\Mail;
+use App\Models\Sellitems as SellitemsModel;
+
 
 class ItemsBuyingController extends Controller
 {
@@ -128,6 +131,9 @@ class ItemsBuyingController extends Controller
 
             foreach ($cart as $item) {
                 $SellproductInfo = new SellproductInfoModel();
+                $stockproduct = SellitemsModel::find($item['id']);
+                $stockproduct->qty =  $stockproduct->qty - $item['quantity'];
+                $stockproduct->save();
 
                 $SellproductInfo->uId = $my_id;
                 $SellproductInfo->catId = $item['catId'];
@@ -154,9 +160,15 @@ class ItemsBuyingController extends Controller
             $payData->status = 1;
             $payData->save();
 
+            if (!empty($newOrder)) {
+                Mail::to($tem_data['email'])->send(new OrderInfo($newOrder));
+            }
+
             Session::forget('cart');
             Session::forget('tem_payment_data');
             Session::forget('subtotal');
+
+
             return redirect('/viewproductcategory')->with('success', 'Your order has been saved successfully');
         } else {
             return redirect()->back()->with('success', 'Somthing wrong');

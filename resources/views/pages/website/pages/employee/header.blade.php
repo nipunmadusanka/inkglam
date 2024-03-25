@@ -104,22 +104,17 @@
                                 <span class="tracking-wide">Experience</span>
                             </div>
                             <ul class="list-inside space-y-2">
-                                <li>
+                                @foreach ($emp_exp as $emp_exp)
+                                    <li>
+                                        <div class="text-amber-800">{{$emp_exp->experience}}</div>
+                                        <div class="text-gray-900 text-xs">{{$emp_exp->startdate .' - '.$emp_exp->enddate}}</div>
+                                    </li>
+                                @endforeach
+                                
+                                {{-- <li>
                                     <div class="text-amber-800">Owner at Her Company Inc.</div>
                                     <div class="text-gray-900 text-xs">March 2020 - Now</div>
-                                </li>
-                                <li>
-                                    <div class="text-amber-800">Owner at Her Company Inc.</div>
-                                    <div class="text-gray-900 text-xs">March 2020 - Now</div>
-                                </li>
-                                <li>
-                                    <div class="text-amber-800">Owner at Her Company Inc.</div>
-                                    <div class="text-gray-900 text-xs">March 2020 - Now</div>
-                                </li>
-                                <li>
-                                    <div class="text-amber-800">Owner at Her Company Inc.</div>
-                                    <div class="text-gray-900 text-xs">March 2020 - Now</div>
-                                </li>
+                                </li> --}}
                             </ul>
                         </div>
                         <div>
@@ -137,14 +132,12 @@
                                 <span class="tracking-wide">Education</span>
                             </div>
                             <ul class="list-inside space-y-2">
-                                <li>
-                                    <div class="text-amber-800">Masters Degree in Oxford</div>
-                                    <div class="text-gray-900 text-xs">March 2020 - Now</div>
-                                </li>
-                                <li>
-                                    <div class="text-amber-800">Bachelors Degreen in LPU</div>
-                                    <div class="text-gray-900 text-xs">March 2020 - Now</div>
-                                </li>
+                                @foreach ($emp_edu as $emp_edu)
+                                    <li>
+                                        <div class="text-amber-800">{{ $emp_edu->education }}</div>
+                                        <div class="text-gray-900 text-xs">{{ $emp_edu->Institute }}</div>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>

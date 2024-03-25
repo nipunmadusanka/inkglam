@@ -6,6 +6,8 @@ use App\Models\Employe as EmployeeModel;
 use App\Models\Product as ProductModel;
 use App\Models\Employee_has_services as EmployeeHasServices;
 use App\Models\NewAppoinments as NewAppoinments;
+use App\Models\Employee_Education as EmployeeEducationModel;
+use App\Models\Employee_Experience as EmployeeExperienceModel;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -41,10 +43,27 @@ class EmployeeController extends Controller
     }
     public function editEmploy($id)
     {
-        $row = EmployeeModel::find($id);
-        $service = ProductModel::where('status', 1)->get();
-        $employe_has_service = EmployeeHasServices::where('status', 1)->where('eId', $id)->with('Product')->get();
-        return view('pages.employee.editemployee', ['result' => $row, 'service' => $service, 'employee_has_service' => $employe_has_service]);
+        if (Auth::check()) {
+            $type = Auth::user()->user_type;
+            if ($type == 0 || $type == 1) {
+                $row = EmployeeModel::find($id);
+                $service = ProductModel::where('status', 1)->get();
+                $employe_has_service = EmployeeHasServices::where('status', 1)->where('eId', $id)->with('Product')->get();
+                $employe_edu_data = EmployeeEducationModel::orderBy('created_at', 'desc')->get();
+                $employe_exp_data = EmployeeExperienceModel::where('emId', $id)->get();
+                return view('pages.employee.editemployee', [
+                    'result' => $row,
+                    'service' => $service,
+                    'employee_has_service' => $employe_has_service,
+                    'employe_edu' => $employe_edu_data,
+                    'employe_exp' => $employe_exp_data,
+                ]);
+            } else {
+                return view('pages.dashboard.dashboard');
+            }
+        } else {
+            return redirect('/');
+        }
     }
     public function deleteEmployee(Request $request)
     {
@@ -228,5 +247,95 @@ class EmployeeController extends Controller
             'employe_has_service' => $employe_has_service,
             'myappoinments' => $myappoinments
         ]);
+    }
+
+    public function addEmployeedu(Request $request, $id)
+    {
+        $my_id = Auth::id();
+        $request->validate([
+            'education' => 'required',
+            'institute' => 'required',
+            'startdate' => 'required',
+            'enddate' => 'required',
+            'note' => 'required',
+        ]);
+        EmployeeEducationModel::create([
+            'uId' => $my_id,
+            'emId' => $id,
+            'education' => $request->education,
+            'Institute' => $request->institute,
+            'startdate' => $request->startdate,
+            'enddate' => $request->enddate,
+            'notes' => $request->note,
+            'status' => 1,
+        ]);
+        return redirect()->back()->with('success', 'Successfully Added Education');
+    }
+
+    public function removeEducation(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        $eduId = $data['eduId'];
+        $eduRow = EmployeeEducationModel::find($eduId);
+        $eduRow->update([
+            'status' => 0,
+        ]);
+        return redirect()->back()->with('success', 'Successfully updated status');
+    }
+
+    public function activeEducation(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        $eduId = $data['eduId'];
+        $eduRow = EmployeeEducationModel::find($eduId);
+        $eduRow->update([
+            'status' => 1,
+        ]);
+        return redirect()->back()->with('success', 'Successfully updated status');
+    }
+
+    public function addExperince(Request $request, $id)
+    {
+        $my_id = Auth::id();
+        $request->validate([
+            'experience' => 'required',
+            'startdate' => 'required',
+            'enddate' => 'required',
+            'skills' => 'required',
+            'note' => 'required',
+        ]);
+        EmployeeExperienceModel::create([
+            'uId' => $my_id,
+            'emId' => $id,
+            'experience' => $request->experience,
+            'startdate' => $request->startdate,
+            'enddate' => $request->enddate,
+            'skills' => $request->skills,
+            'notes' => $request->note,
+            'status' => 1,
+        ]);
+        return redirect()->back()->with('success', 'Successfully Added Experience');
+    }
+
+    public function removeExperince(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        $expId = $data['expId'];
+        $expRow = EmployeeExperienceModel::find($expId);
+        $expRow->update([
+            'status' => 0,
+        ]);
+        return redirect()->back()->with('success', 'Successfully updated status');
+    }
+
+    public function activeExperince(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        $expId = $data['expId'];
+        $expRow = EmployeeExperienceModel::find($expId);
+        $expRow->update([
+            'status' => 1,
+        ]);
+        return redirect()->back()->with('success', 'Successfully updated status');
     }
 }

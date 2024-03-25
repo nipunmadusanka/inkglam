@@ -11,6 +11,8 @@ use App\Http\Controllers\MainServiceController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\itemsController;
 use App\Http\Controllers\ItemsBuyingController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,7 +60,8 @@ Route::post('/payment', [ItemsBuyingController::class, 'payment'])->name('paymen
 Route::get('/viewconfirmpaymentotp', [ItemsBuyingController::class, 'viewConfirmPaymentOTP'])->name('pages.viewconfirmpayment');
 Route::post('/paymentotp', [ItemsBuyingController::class, 'paymentOTP'])->name('paymentotp');
 
-Route::get('/alluseradmin', [HomeController::class, 'alluseradmin'])->name('alluseradmin');
+Route::get('/alluseradmin', [UserController::class, 'alluseradmin'])->name('alluseradmin');
+Route::get('/viewuserorder/{id}', [UserController::class, 'viewUserorder'])->name('page.userorder');
 
 Route::get('/dashboard', function () {
     return view('pages.dashboard.dashboard');
@@ -88,6 +91,12 @@ Route::put('/updateemployee/{id}', [EmployeeController::class, 'updateEmployee']
 Route::post('/addserviceToEmployee', [EmployeeController::class, 'addServiceToEmployee'])->name('addserviceToEmployee');
 Route::post('/removeemployeeinservice', [EmployeeController::class, 'removeEmployeeInService'])->name('removeemployeeinservice');
 Route::get('/viewemployeinfo/{id}', [EmployeeController::class, 'viewemployeinfo'])->name('viewemployeinfo');
+Route::post('/addemployeedu/{id}', [EmployeeController::class, 'addEmployeedu'])->name('addemployeedu');
+Route::post('/removeeducation', [EmployeeController::class, 'removeEducation'])->name('removeeducation');
+Route::post('/activeeducation', [EmployeeController::class, 'activeEducation'])->name('activeeducation');
+Route::post('/addexperince/{id}', [EmployeeController::class, 'addExperince'])->name('addexperince');
+Route::post('/removeexperince', [EmployeeController::class, 'removeExperince'])->name('removeexperince');
+Route::post('/activeexperince', [EmployeeController::class, 'activeExperince'])->name('activeexperince');
 
 Route::get('/appoinmentadmin', [AppoinmentController::class, 'appoinmentadmin'])->name('appoinmentadmin');
 Route::post('/appoinmentaccept', [AppoinmentController::class, 'appoinmentAccept'])->name('appoinmentaccept');
@@ -117,7 +126,11 @@ Route::get('/edititems/{id}', [itemsController::class, 'editItems'])->name('page
 Route::post('/updateitems/{id}', [itemsController::class, 'updateItems'])->name('updateitems');
 Route::post('/deactiveitems', [itemsController::class, 'deactiveItems'])->name('deactiveItems');
 Route::post('/activeitems', [itemsController::class, 'activeItems'])->name('activeItems');
+Route::get('/ordersadmin', [itemsController::class, 'ordersAdmin'])->name('pages.ordersadmin');
+Route::post('/readorder', [itemsController::class, 'readOrder'])->name('readorder');
 
+Route::get('/viewmychat/{id}', [ChatController::class, 'viewMyChat'])->name('viewmyChat');
+Route::post('/postchat', [ChatController::class, 'postChat'])->name('postchat');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

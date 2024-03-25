@@ -9,7 +9,7 @@
                     src={{ asset('sellitems/' . $result->image) }}>
 
                 <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-                    <h2 class="text-sm title-font  tracking-widest">BRAND NAME</h2>
+                    <h2 class="text-sm title-font  tracking-widest">{{ $result->brand }}</h2>
                     <h1 class="text-white text-3xl title-font font-medium mb-1">{{ $result->item }}</h1>
                     <div class="flex mb-4">
                         <span class="flex items-center">

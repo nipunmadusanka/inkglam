@@ -3,15 +3,14 @@
         <div class="p-4 flex flex-col">
             <div class="text-start mb-12">
                 <h1 class="text-start text-lg font-bold text-white">
-                     Main Category
+                    All Orders
                 </h1>
             </div>
-
             <div class="flex bg-slate-300 p-4">
-                <a href={{ Route('pages.addMainItemCategory') }}
+                <a href={{ Route('pages.viewMainItemCategory') }}
                     class="middle none center mr-3 rounded-lg bg-sky-600 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-sky-500/20 transition-all hover:shadow-lg hover:shadow-sky-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                     data-ripple-light="true">
-                    Add Main Category
+                    View Main Category
                 </a>
                 <a href={{ Route('pages.ordersadmin') }}
                     class="middle none center mr-3 rounded-lg bg-sky-600 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-sky-500/20 transition-all hover:shadow-lg hover:shadow-sky-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
@@ -25,10 +24,16 @@
                         <tr>
                             <th
                                 class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
-                                Image</th>
+                                ID</th>
                             <th
                                 class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
-                                Title</th>
+                                Payment Id</th>
+                            <th
+                                class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
+                                User Info Id</th>
+                            <th
+                                class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
+                                Total</th>
                             <th
                                 class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
                                 Status</th>
@@ -45,18 +50,29 @@
                                 <td
                                     class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
                                     <span
-                                        class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Image</span>
-                                    <div class="flex flex-row items-center justify-center">
-                                        <img src="{{ asset('itemMainCat/' . $item->image) }}" alt="image"
-                                            class="w-16" />
-                                    </div>
+                                        class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Id</span>
+                                    {{ $item->id }}
                                 </td>
                                 <td
                                     class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
                                     <span
                                         class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
-                                        Title</span>
-                                    {{ $item->title }}
+                                        Payment Id</span>
+                                    {{ $item->payInfoId }}
+                                </td>
+                                <td
+                                    class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+                                    <span
+                                        class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
+                                        User Info Id</span>
+                                    {{ $item->uInfoId }}
+                                </td>
+                                <td
+                                    class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+                                    <span
+                                        class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
+                                        Total</span>
+                                    {{ $item->total }}
                                 </td>
                                 <td
                                     class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
@@ -74,22 +90,16 @@
                                         class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Actions</span>
 
                                     <div class="flex flex-row justify-center space-x-2">
-                                        <a href={{ Route('page.editmainitem', ['id' => $item->id]) }} class="">
-                                            <button
-                                                class=" bg-sky-500 p-2 border-1 rounded-lg px-4 min-w-24">Edit</button>
-                                        </a>
                                         <input type="text" class="myId" hidden value='{{ $item->id }}' />
-                                        @if ($item->status == 1)
+                                        @if ($item->notes != 'read')
                                             <button type="submit"
-                                                class=" bg-red-500 p-2 border-1 rounded-lg min-w-24 deactive">Deactivate</button>
-                                        @elseif ($item->status == 0)
-                                            <button type="submit"
-                                                class=" bg-yellow-400 p-2 border-1 rounded-lg min-w-24 active">Activate</button>
-                                        @endif
+                                                class=" bg-yellow-400 p-2 border-1 rounded-lg min-w-24 read">Read</button>
+                                        @else
                                         <a href={{ Route('pages.viewItems', ['id' => $item->id]) }} class="">
                                             <button
                                                 class=" bg-green-500 p-2 border-1 rounded-lg px-4 min-w-24">View</button>
                                         </a>
+                                        @endif
                                     </div>
                                 </td>
                                 <?php $count++; ?>
@@ -105,15 +115,15 @@
 
 <script>
     $(document).ready(function() {
-        $('.deactive').click(function(e) {
+        $('.read').click(function(e) {
             e.preventDefault();
-            var deActiveId = $(this).siblings('.myId').val();
-            if (deActiveId) {
+            var orderId = $(this).siblings('.myId').val();
+            if (orderId) {
                 $.ajax({
-                    url: '{{ route('mainitem.deactive') }}',
+                    url: '{{ route('readorder') }}',
                     type: 'POST',
                     data: JSON.stringify({
-                        deActiveId: deActiveId,
+                        orderId: orderId,
                     }),
                     processData: false,
                     contentType: false,
@@ -129,33 +139,6 @@
                 });
             } else {
                 console.log('Please Click Deactive Button, If You Want to Deactive this Main Item');
-            }
-        });
-
-        $('.active').click(function(e) {
-            e.preventDefault();
-            var activeId = $(this).siblings('.myId').val();
-            if (activeId) {
-                $.ajax({
-                    url: '{{ route('mainitem.active') }}',
-                    type: 'POST',
-                    data: JSON.stringify({
-                        activeId: activeId,
-                    }),
-                    processData: false,
-                    contentType: false,
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(response) {
-                        window.location.reload();
-                    },
-                    error: function(error) {
-                        var response = JSON.parse(error.responseText);
-                    }
-                });
-            } else {
-                console.log('Please Click Active Button, If You Want to Active this Main Item');
             }
         });
     });

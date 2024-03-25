@@ -16,6 +16,8 @@ use App\Models\Mainservice as MainServicesModel;
 use App\Models\Imagegallery as ImagegalleryModel;
 use App\Models\Maincatitems as MainItemsModel;
 use App\Models\Sellitems as SellitemsModel;
+use App\Models\Employee_Education as EmployeeEducationModel;
+use App\Models\Employee_Experience as EmployeeExperienceModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use PHPUnit\Metadata\Uses;
@@ -380,8 +382,14 @@ class HomeController extends Controller
     public function viewEmployeProfile($id)
     {
         $data = EmployeeModel::where('id', $id)->first();
-        // dd($data);
-        return view('pages.website.pages.employee.employee', ['results' => $data]);
+        $emp_edu = EmployeeEducationModel::where('emId', $id)->get();
+        $emp_exp = EmployeeExperienceModel::where('emId', $id)->get();
+        // dd($emp_edu);
+        return view('pages.website.pages.employee.employee', [
+            'results' => $data,
+            'emp_edu' => $emp_edu,
+            'emp_exp' => $emp_exp,
+        ]);
     }
 
     public function letsTalksContacts()
@@ -394,13 +402,4 @@ class HomeController extends Controller
         }
     }
 
-    public function alluseradmin()
-    {
-        if (Auth::check()) {
-            $usersWithType2 = UserModel::where('user_type', 2)->get();
-            return view('pages.users.users', ['result' => $usersWithType2]);
-        } else {
-            return redirect('/');
-        }
-    }
 }

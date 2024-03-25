@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Maincatitems as Maincatitems;
 use App\Models\Sellitems as Sellitems;
+use App\Models\Orders as Orders;
 use App\Models\Mainservice;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +18,8 @@ class itemsController extends Controller
     {
         if (Auth::check()) {
             $data = Maincatitems::all();
-            return view('pages.itemsell.maincategory', ['result' => $data]);
+            $count = Orders::where('notes', '!=', 'read')->count();
+            return view('pages.itemsell.maincategory', ['result' => $data, 'count' => $count]);
         } else {
             return redirect('/');
         }
@@ -286,5 +288,25 @@ class itemsController extends Controller
         ]);
 
         return redirect('/viewmainitemcategory')->with('success', 'Successfully updated');
+    }
+
+    public function ordersAdmin()
+    {
+        $data = Orders::all();
+        $count = Orders::where('notes', '!=', 'read')->count();
+        return view('pages.orders.order', ['result' => $data, 'count' => $count]);
+    }
+
+    public function readOrder(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        $orderId = $data['orderId'];
+        $myData = Orders::find($orderId);
+
+        if ($myData) {
+            $myData->notes = 'read';
+            $myData->save();
+            return redirect()->back()->with('success', 'Successfully deactivated');
+        }
     }
 }
