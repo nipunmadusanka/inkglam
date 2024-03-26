@@ -5,7 +5,7 @@ $emId = request('emId');
 @php
     $storedData = session('stored_data');
 @endphp
-<div class="flex justify-center w-full h-full p-5 bg-[#B2B2B2]">
+<div class="pt-40 h-screen flex justify-center w-full p-5 bg-[#B2B2B2]">
     <div class="container flex items-center justify-center">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3 order-2">
             <div class="items-center justify-center pt-5 pb-5 md:order-1 order-2 px-12 bg-neutral-400 border-2">

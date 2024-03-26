@@ -1,7 +1,7 @@
 @extends('pages.website.layouts.webapp')
 @section('webcontent')
     <script defer src="https://unpkg.com/alpinejs@3.2.3/dist/cdn.min.js"></script>
-    <div class="flex flex-col h-screen bg-gradient-to-b from-[#0c1927] to-gray-700">
+    <div class="pt-40 min-h-screen flex flex-col h-screen bg-gradient-to-b from-[#0c1927] to-gray-700">
         <div class="grid place-items-center mx-2 my-20 sm:my-auto" x-data="{ showPass: true }">
             <div
                 class="w-11/12 p-12 sm:w-8/12 md:w-6/12 lg:w-5/12 2xl:w-4/12

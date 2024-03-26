@@ -1,4 +1,4 @@
-<div class="relative w-full md:h-screen overflow-hidden">
+<div class="mt-20 relative w-full md:h-screen overflow-hidden">
     <img src={{ asset('/photos/aboutus.jpg') }} alt=""
     class="top-0 right-0 object-cover object-center w-full h-full">
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ">

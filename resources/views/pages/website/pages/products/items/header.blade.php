@@ -1,4 +1,4 @@
-<div class="flex justify-center items-center p-5 w-full h-auto bg-[#343232] font-serif">
+<div class="pt-24 flex justify-center items-center p-5 w-full h-auto bg-[#343232] font-serif">
     <div class="container flex justify-center">
         <div class="flex flex-col py-16 space-y-2 text-slate-50">
             {{-- <div class="flex justify-center text-center">

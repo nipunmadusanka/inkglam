@@ -1,7 +1,7 @@
 @php
     $storedData = session('stored_data');
 @endphp
-<div class="flex justify-center w-full h-full p-5 bg-[#343232] text-white">
+<div class="pt-40 min-h-screen flex justify-center w-full h-full p-5 bg-[#343232] text-white">
     <div class="container flex items-center justify-center">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             @if ($storedData)

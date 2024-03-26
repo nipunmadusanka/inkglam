@@ -1,5 +1,5 @@
 <!-- Component: Slider with indicators inside -->
-<div class="relative h-screen glide-02 p-0">
+<div class="pt-28 relative h-screen glide-02 p-0">
     <!-- Slides -->
     <div class="overflow-hidden h-full font-serif" data-glide-el="track">
         <ul

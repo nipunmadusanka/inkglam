@@ -57,7 +57,7 @@
         }
     }
 </style>
-<div class="flex justify-center items-center p-10 w-full h-auto bg-indigo-50 font-serif pb-15">
+<div class="pt-40 min-h-screen flex justify-center items-center p-10 w-full h-auto bg-indigo-50 font-serif pb-15">
     <form id="user-form" method="POST" action="" enctype="multipart/form-data">
         <div class="grid grid-cols-1 gap-1 lg:grid-cols-3">
             <div class="lg:col-span-2 bg-indigo-50 space-y-8 px-12 pb-4">
@@ -90,9 +90,7 @@
                     <section>
                         <h2 class="uppercase tracking-wide text-lg font-semibold text-gray-700 my-2">Shipping & Billing
                             Information</h2>
-                        @foreach (session('tem_payment_data', []) as $item)
-                            <li>{{ $item }}</li>
-                        @endforeach
+                        
                         <fieldset class="mb-3 bg-white shadow-lg rounded text-gray-600">
                             <label class="flex border-b border-gray-200 h-12 py-3 items-center">
                                 <span class="text-right px-2">Name</span>

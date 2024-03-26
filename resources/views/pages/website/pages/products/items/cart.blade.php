@@ -13,7 +13,7 @@
     </style>
 
     <body>
-        <div class="h-auto bg-[#343232] pt-20 pb-10">
+        <div class="pt-40 min-h-screen bg-[#343232] pb-10">
             <div class="flex justify-center text-center pb-5">
                 <h1 class="text-center text-4xl font-bold text-amber-500">Cart Items</h1>
             </div>

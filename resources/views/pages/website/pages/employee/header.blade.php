@@ -1,4 +1,4 @@
-<div class="flex justify-center items-center p-5 w-full h-auto bg-[#343232] font-serif pb-10">
+<div class="pt-28 flex justify-center items-center p-5 w-full h-auto bg-[#343232] font-serif pb-10">
     <div class="container h-screen mx-auto my-5 p-5 ">
         <div class="flex justify-center text-center pb-5">
             <h1 class="text-center text-4xl font-bold text-amber-500">User Profile</h1>
@@ -110,7 +110,7 @@
                                         <div class="text-gray-900 text-xs">{{$emp_exp->startdate .' - '.$emp_exp->enddate}}</div>
                                     </li>
                                 @endforeach
-                                
+
                                 {{-- <li>
                                     <div class="text-amber-800">Owner at Her Company Inc.</div>
                                     <div class="text-gray-900 text-xs">March 2020 - Now</div>

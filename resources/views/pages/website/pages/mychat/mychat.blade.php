@@ -1,7 +1,7 @@
 @extends('pages.website.layouts.webapp')
 @section('webcontent')
     <!-- component -->
-    <div class=" p-20 bg-white">
+    <div class=" p-20 mt-20 min-h-screen bg-white">
         <div class="flex h-screen antialiased text-gray-800">
             <div class="flex flex-row h-full w-full overflow-x-hidden">
                 <div class="flex flex-col py-8 pl-6 pr-2 w-64 bg-white flex-shrink-0 rounded-lg">
